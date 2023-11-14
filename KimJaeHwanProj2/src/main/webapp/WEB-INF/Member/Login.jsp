@@ -26,7 +26,7 @@
     </c:if>
     <c:if test="${not empty username}">
     <a class="btn btn-success btn-lg" href="<c:url value="/Board/EditMember.kjh"/>" role="button">회원정보수정</a>
-    <a class="btn btn-danger btn-lg" href="<c:url value="/Board/Login.kjh"/>" role="button">로그아웃</a>
+    <a class="btn btn-danger btn-lg" href="<c:url value="/Logout.kjh"/>" role="button">로그아웃</a>
     <a class="btn btn-danger btn-lg" href="<c:url value="/Board/List.kjh"/>" role="button">리스트</a>
   	</c:if>
   </p>

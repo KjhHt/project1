@@ -89,6 +89,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">수정</button>
+    <a href="<c:url value="/Board/DelMember.kjh"/>" class="btn btn-primary">회원탈퇴</a>
   </fieldset>
 </form>
 </div>
