@@ -1,18 +1,15 @@
 package model.board.DAO;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.sql.DataSource;
 
 import jakarta.servlet.ServletContext;
-import model.board.DTO.BoardDTO;
 import model.board.DTO.MemberDTO;
 import service.DaoService;
 
@@ -26,8 +23,6 @@ public class MemberDAO implements DaoService<MemberDTO>{
 	//생성자
 	public MemberDAO(ServletContext context) {
 		try {
-			//커넥션 풀 사용.즉 커넥션 풀에서 커넥션 객체 가져오기
-			//(리스너에서 컨텍스트 영역에 저장한 데이타소스 가져오기)
 			DataSource source = (DataSource)context.getAttribute(DATA_SOURCE);
 			conn = source.getConnection();
 		}
@@ -52,8 +47,27 @@ public class MemberDAO implements DaoService<MemberDTO>{
 
 	@Override
 	public MemberDTO selectOne(String... params) {
+		MemberDTO dto= null;
+		String sql = "SELECT * FROM member WHERE username =?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, params[0]);
+			System.out.println("params[0] : "+params[0]);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				dto = new MemberDTO();
+				dto.setUsername(rs.getString(1));
+				dto.setPassword(rs.getString(2));
+				dto.setGender(rs.getString(3));
+				dto.setInters(rs.getString(4));
+				dto.setEducation(rs.getString(5));
+				dto.setSelfintroduce(rs.getString(6));
+				dto.setRegidate(rs.getDate(7));
+			}
+		}
+		catch(SQLException e) {e.printStackTrace();}
 		
-		return null;
+		return dto;
 	}
 
 	@Override
@@ -64,20 +78,51 @@ public class MemberDAO implements DaoService<MemberDTO>{
 
 	@Override
 	public int insert(MemberDTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int affected = 0;
+		String sql = "INSERT INTO member VALUES(?,?,?,?,?,?,SYSDATE)";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getUsername());
+			psmt.setString(2, dto.getPassword());
+			psmt.setString(3, dto.getGender());
+			psmt.setString(4, dto.getInters());
+			psmt.setString(5, dto.getEducation());
+			psmt.setString(6, dto.getSelfintroduce());
+			affected = psmt.executeUpdate();
+		}
+		catch(SQLException e) {e.printStackTrace();}
+		return affected;
 	}
 
 	@Override
 	public int update(MemberDTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int affected = 0;
+		String sql = "UPDATE member SET password=?,gender=?,inters=?,education=?,selfintroduce=? WHERE username = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getPassword());
+			psmt.setString(2, dto.getGender());
+			psmt.setString(3, dto.getInters());
+			psmt.setString(4, dto.getEducation());
+			psmt.setString(5, dto.getSelfintroduce());
+			psmt.setString(6, dto.getUsername());
+			affected = psmt.executeUpdate();
+		}
+		catch(SQLException e) {e.printStackTrace();}		
+		return affected;
 	}
 
 	@Override
 	public int delete(MemberDTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int affected = 0;
+		String sql = "DELETE member WHERE username = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getUsername());
+			affected = psmt.executeUpdate();
+		}
+		catch(SQLException e) {e.printStackTrace();}		
+		return affected;
 	}
 	
 	public boolean isMember(String username,String password) {

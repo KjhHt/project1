@@ -20,7 +20,7 @@ public class InsertController extends HttpServlet {
 	}
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost( HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
 		String username = (String) req.getSession().getAttribute("username");

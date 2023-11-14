@@ -27,7 +27,7 @@ public class LoginCheckFilter implements Filter {
 			resp.setContentType("text/html; charset=UTF-8");
 			PrintWriter out= resp.getWriter();
 			out.println("<script>");
-			out.println("alert('Please Use After Login...(Token based)')");
+			out.println("alert('유효하지 않는 접근방법입니다 로그인 먼저 부탁드려요!')");
 			out.println("location.replace('"+req.getContextPath()+"/')");
 			out.println("</script>");
 			return;
