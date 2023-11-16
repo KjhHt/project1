@@ -1,4 +1,4 @@
-package controller.board;
+package controller.member;
 
 import java.io.IOException;
 import java.util.HashMap;

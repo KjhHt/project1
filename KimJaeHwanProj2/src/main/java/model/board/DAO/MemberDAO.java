@@ -141,5 +141,20 @@ public class MemberDAO implements DaoService<MemberDTO>{
 		catch(SQLException e) {e.printStackTrace(); return false;}
 		return true;
 	}
+	
+	public boolean isDuplicationId(String username) {
+		String sql = "SELECT COUNT(*) "
+				   + "FROM member "
+				   + "WHERE username = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, username);
+			rs = psmt.executeQuery();
+			rs.next();
+			if(rs.getInt(1)==0) return false;
+		}
+		catch(SQLException e) {e.printStackTrace(); return false;}
+		return true;
+	}
 
 }

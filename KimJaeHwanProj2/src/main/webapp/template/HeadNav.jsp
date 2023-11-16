@@ -53,7 +53,9 @@
         </div>
       </li>
     </ul>
-    <a class="btn btn-danger btn-lg" href="<c:url value="/Logout.kjh"/>" role="button">로그아웃</a>
-	아이디 : ${username }
+    <c:if test="${username ne null}">
+	    <span style="font-size:18px" class="text-white font-weight-bold display-5">${username}님 반가워용^^! &nbsp;&nbsp;&nbsp;</span> 
+	    <a class="btn btn-danger btn-lg" href="<c:url value="/Logout.kjh"/>" role="button">로그아웃</a>
+	</c:if>
   </div>
 </nav>
