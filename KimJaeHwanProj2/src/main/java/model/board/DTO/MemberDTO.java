@@ -10,11 +10,12 @@ public class MemberDTO {
 	private String education;
 	private String selfintroduce;
 	private Date regidate;
+	private String email;
 	
 	public MemberDTO() {}
 	
 	public MemberDTO(String username, String password, String gender, String inters, String education,
-			String selfintroduce, Date regidate) {
+			String selfintroduce, Date regidate,String email) {
 		this.username = username;
 		this.password = password;
 		this.gender = gender;
@@ -22,6 +23,7 @@ public class MemberDTO {
 		this.education = education;
 		this.selfintroduce = selfintroduce;
 		this.regidate = regidate;
+		this.email = email;
 	}
 
 	public String getUsername() {
@@ -78,6 +80,14 @@ public class MemberDTO {
 
 	public void setRegidate(Date regidate) {
 		this.regidate = regidate;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

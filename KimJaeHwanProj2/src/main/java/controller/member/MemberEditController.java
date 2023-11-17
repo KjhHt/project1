@@ -43,11 +43,13 @@ public class MemberEditController extends HttpServlet{
 		String inter = sb.substring(0,sb.length()-1).toString();
 		String selfintroduce = req.getParameter("selfintroduce");
 		String password = req.getParameter("password");
+		String email = req.getParameter("email");
 		String education = req.getParameter("education");
 		String gender = req.getParameter("gender");
 		
 		dto.setUsername(username);
 		dto.setPassword(password);
+		dto.setEmail(email);
 		dto.setEducation(education);
 		dto.setInters(inter);
 		dto.setSelfintroduce(selfintroduce);

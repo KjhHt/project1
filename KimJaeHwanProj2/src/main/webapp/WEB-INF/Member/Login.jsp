@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <jsp:include page="/template/HeadNav.jsp"/>
 
 <div class="jumbotron">
@@ -28,9 +27,11 @@
     <a class="btn btn-success btn-lg" href="<c:url value="/Board/EditMember.kjh"/>" role="button">회원정보수정</a>
     <a class="btn btn-danger btn-lg" href="<c:url value="/Logout.kjh"/>" role="button">로그아웃</a>
     <a class="btn btn-danger btn-lg" href="<c:url value="/Board/List.kjh"/>" role="button">리스트</a>
-  	</c:if>
   </p>
 </div>
+
+<!-- 여기에다가 프로필 -->
+</c:if>
 
 
 <script>

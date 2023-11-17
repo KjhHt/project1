@@ -63,6 +63,7 @@ public class MemberDAO implements DaoService<MemberDTO>{
 				dto.setEducation(rs.getString(5));
 				dto.setSelfintroduce(rs.getString(6));
 				dto.setRegidate(rs.getDate(7));
+				dto.setEmail(rs.getString(8));
 			}
 		}
 		catch(SQLException e) {e.printStackTrace();}
@@ -79,7 +80,7 @@ public class MemberDAO implements DaoService<MemberDTO>{
 	@Override
 	public int insert(MemberDTO dto) {
 		int affected = 0;
-		String sql = "INSERT INTO member VALUES(?,?,?,?,?,?,SYSDATE)";
+		String sql = "INSERT INTO member VALUES(?,?,?,?,?,?,SYSDATE,?)";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getUsername());
@@ -88,6 +89,7 @@ public class MemberDAO implements DaoService<MemberDTO>{
 			psmt.setString(4, dto.getInters());
 			psmt.setString(5, dto.getEducation());
 			psmt.setString(6, dto.getSelfintroduce());
+			psmt.setString(7, dto.getEmail());
 			affected = psmt.executeUpdate();
 		}
 		catch(SQLException e) {e.printStackTrace();}
@@ -97,7 +99,7 @@ public class MemberDAO implements DaoService<MemberDTO>{
 	@Override
 	public int update(MemberDTO dto) {
 		int affected = 0;
-		String sql = "UPDATE member SET password=?,gender=?,inters=?,education=?,selfintroduce=? WHERE username = ?";
+		String sql = "UPDATE member SET password=?,gender=?,inters=?,education=?,selfintroduce=?,email=? WHERE username = ?";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getPassword());
@@ -105,7 +107,8 @@ public class MemberDAO implements DaoService<MemberDTO>{
 			psmt.setString(3, dto.getInters());
 			psmt.setString(4, dto.getEducation());
 			psmt.setString(5, dto.getSelfintroduce());
-			psmt.setString(6, dto.getUsername());
+			psmt.setString(6, dto.getEmail());
+			psmt.setString(7, dto.getUsername());
 			affected = psmt.executeUpdate();
 		}
 		catch(SQLException e) {e.printStackTrace();}		

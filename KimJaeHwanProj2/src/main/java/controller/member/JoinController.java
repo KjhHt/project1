@@ -50,6 +50,9 @@ public class JoinController extends HttpServlet {
 				|| !password.matches("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()_-])[A-Za-z\\d!@#$%^&*()_-]{8,16}$")) {
 			out.println("<script>alert('비밀번호를 확인하세요. -관리자 문의'); history.back();</script>");
 		}
+		//if(이메일 유효성)
+		String email = req.getParameter("email");
+		
 		String education = req.getParameter("education");
 		if(education == null || education.trim().isEmpty() ) {
 			out.println("<script>alert('학력를 선택하세요. -관리자 문의'); history.back();</script>");
@@ -61,6 +64,7 @@ public class JoinController extends HttpServlet {
 		
 		dto.setUsername(username);
 		dto.setPassword(password);
+		dto.setEmail(email);
 		dto.setEducation(education);
 		dto.setInters(inter);
 		dto.setSelfintroduce(selfintroduce);

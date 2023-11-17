@@ -20,6 +20,10 @@
       <label for="exampleInputPassword1">비밀번호 확인</label>
       <input type="password" class="form-control" id="password_ck" name="password_ck" placeholder="Password">
     </div>
+        <div class="form-group">
+      <label for="exampleInputEmail1">이메일</label>
+      <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요">
+    </div>
     <fieldset class="form-group">
       <legend>성별</legend>
       <div class="form-check">
