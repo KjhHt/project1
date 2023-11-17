@@ -28,12 +28,53 @@
     <a class="btn btn-danger btn-lg" href="<c:url value="/Logout.kjh"/>" role="button">로그아웃</a>
     <a class="btn btn-danger btn-lg" href="<c:url value="/Board/List.kjh"/>" role="button">리스트</a>
   </p>
-</div>
+
 
 <!-- 여기에다가 프로필 -->
+<div class="container white-box">
+      <div class="row">
+        <div class="col-md-8 profile-simple">
+          <div class="d-flex">
+            <div class="flex-shrink-0">
+              <c:url value="/images/1.png" var="imageUrl" />
+				<img src="${imageUrl}" width="150" height="145" alt="프로필"/>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <h3>Hyewon</h3>
+              <p>Front-end Designer</p>
+              <div>
+                <i
+                  class="fa-solid fa-location-dot d-inline-block"
+                  style="color: #6fbaf8"
+                ></i>
+                <span style="color: #6fbaf8">서울시 동대문구</span>
+              </div>
+              <button
+                class="btn text-white mt-3"
+                style="background-color: #6fbaf8"
+              >
+                연락하기
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 border-left">
+          <div class="row profile-detail">
+            <div class="col-6"><p>Location</p></div>
+            <div class="col-6"><p>서울 근무</p></div>
+            <div class="col-6"><p>Age</p></div>
+            <div class="col-6"><p>25</p></div>
+            <div class="col-6"><p>Experience</p></div>
+            <div class="col-6"><p>신입</p></div>
+            <div class="col-6"><p>School</p></div>
+            <div class="col-6"><p>서일대학교 컴퓨터전자공학과</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
 </c:if>
 
-
+</div>
 <script>
 
 	function chk_login(){
