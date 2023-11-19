@@ -9,6 +9,7 @@ public class BoardDTO {
 	private String content;
 	private String visitcount;
 	private Date postdate;
+	private String name;
 	
 	public BoardDTO() {}
 	
@@ -47,6 +48,14 @@ public class BoardDTO {
 	}
 	public void setPostdate(Date postdate) {
 		this.postdate = postdate;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

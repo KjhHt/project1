@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.board.DAO.JWTTokens;
 import model.board.DAO.MemberDAO;
+import model.board.DTO.MemberDTO;
 @WebServlet(urlPatterns = "/Login.kjh")
 public class LoginController extends HttpServlet {
 	
@@ -23,7 +24,6 @@ public class LoginController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 		MemberDAO dao = new MemberDAO(getServletContext());
 		
 		String username = req.getParameter("username");
@@ -42,7 +42,11 @@ public class LoginController extends HttpServlet {
 			cookie.setPath(req.getContextPath());
 			resp.addCookie(cookie);
 			req.getSession().setAttribute("username", username);
-			req.getRequestDispatcher("/WEB-INF/Member/Login.jsp").forward(req, resp); 
+			
+			MemberDTO list = dao.selectOne(username);
+			req.setAttribute("list", list);
+			
+			req.getRequestDispatcher("/WEB-INF/Member/Member_MyPage.jsp").forward(req, resp); 
 		}else {
 			req.setAttribute("ERROR", "등록된 회원아니에용");
 			req.getRequestDispatcher("/WEB-INF/Member/Login.jsp").forward(req, resp); 

@@ -52,6 +52,8 @@ public class JoinController extends HttpServlet {
 		}
 		//if(이메일 유효성)
 		String email = req.getParameter("email");
+		//if(이름 유효성)
+		String name = req.getParameter("name");
 		
 		String education = req.getParameter("education");
 		if(education == null || education.trim().isEmpty() ) {
@@ -65,6 +67,7 @@ public class JoinController extends HttpServlet {
 		dto.setUsername(username);
 		dto.setPassword(password);
 		dto.setEmail(email);
+		dto.setName(name);
 		dto.setEducation(education);
 		dto.setInters(inter);
 		dto.setSelfintroduce(selfintroduce);

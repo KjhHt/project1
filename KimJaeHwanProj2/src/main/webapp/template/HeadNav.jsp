@@ -12,6 +12,7 @@
    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
    <script src="https://kit.fontawesome.com/0b4621b427.js" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
    <link href="/KimJaeHwanProj2/template/css/bootswatch.css" rel="stylesheet">
    <link href="/KimJaeHwanProj2/template/css/_variables.scss" rel="stylesheet">
    <link href="/KimJaeHwanProj2/template/css/bootstrap.css" rel="stylesheet">
@@ -28,29 +29,9 @@
 
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">입력
-          <span class="sr-only">(current)</span>
-        </a>
-      </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">수정</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">삭제</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">리스트</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">일단보류</a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Separated link</a>
-        </div>
+        <a class="nav-link" href="<c:url value="/Board/List.kjh"/>">리스트</a>
+        <a class="nav-link" href="<c:url value="/Board/MyPage.kjh"/>">마이페이지</a>
       </li>
     </ul>
     <c:if test="${username ne null}">

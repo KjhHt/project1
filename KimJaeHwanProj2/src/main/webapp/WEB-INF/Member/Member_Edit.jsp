@@ -22,6 +22,10 @@
       <input type="password" class="form-control" id="" name="password_ck" placeholder="Password">
     </div>
     <div class="form-group">
+      <label for="exampleInputEmail1">이름</label>
+      <input type="text" class="form-control" id="" name="name" value="${memberDto.name}">
+    </div>
+    <div class="form-group">
       <label for="exampleInputEmail1">이메일</label>
       <input type="text" class="form-control" id="" name="email" value="${memberDto.email}">
     </div>

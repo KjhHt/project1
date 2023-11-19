@@ -52,7 +52,6 @@ public class MemberDAO implements DaoService<MemberDTO>{
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, params[0]);
-			System.out.println("params[0] : "+params[0]);
 			rs = psmt.executeQuery();
 			if(rs.next()) {
 				dto = new MemberDTO();
@@ -64,6 +63,8 @@ public class MemberDAO implements DaoService<MemberDTO>{
 				dto.setSelfintroduce(rs.getString(6));
 				dto.setRegidate(rs.getDate(7));
 				dto.setEmail(rs.getString(8));
+				dto.setName(rs.getString(9));
+				dto.setProfile(rs.getString(10));
 			}
 		}
 		catch(SQLException e) {e.printStackTrace();}
@@ -80,7 +81,7 @@ public class MemberDAO implements DaoService<MemberDTO>{
 	@Override
 	public int insert(MemberDTO dto) {
 		int affected = 0;
-		String sql = "INSERT INTO member VALUES(?,?,?,?,?,?,SYSDATE,?)";
+		String sql = "INSERT INTO member VALUES(?,?,?,?,?,?,SYSDATE,?,?,DEFAULT)";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getUsername());
@@ -90,6 +91,7 @@ public class MemberDAO implements DaoService<MemberDTO>{
 			psmt.setString(5, dto.getEducation());
 			psmt.setString(6, dto.getSelfintroduce());
 			psmt.setString(7, dto.getEmail());
+			psmt.setString(8, dto.getName());
 			affected = psmt.executeUpdate();
 		}
 		catch(SQLException e) {e.printStackTrace();}
@@ -99,7 +101,7 @@ public class MemberDAO implements DaoService<MemberDTO>{
 	@Override
 	public int update(MemberDTO dto) {
 		int affected = 0;
-		String sql = "UPDATE member SET password=?,gender=?,inters=?,education=?,selfintroduce=?,email=? WHERE username = ?";
+		String sql = "UPDATE member SET password=?,gender=?,inters=?,education=?,selfintroduce=?,email=?,name=? WHERE username = ?";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getPassword());
@@ -108,7 +110,8 @@ public class MemberDAO implements DaoService<MemberDTO>{
 			psmt.setString(4, dto.getEducation());
 			psmt.setString(5, dto.getSelfintroduce());
 			psmt.setString(6, dto.getEmail());
-			psmt.setString(7, dto.getUsername());
+			psmt.setString(7, dto.getName());
+			psmt.setString(8, dto.getUsername());
 			affected = psmt.executeUpdate();
 		}
 		catch(SQLException e) {e.printStackTrace();}		
@@ -158,6 +161,21 @@ public class MemberDAO implements DaoService<MemberDTO>{
 		}
 		catch(SQLException e) {e.printStackTrace(); return false;}
 		return true;
+	}
+
+	public int updateProfile(String username, String profile) {
+		int affected = 0;
+		String sql  = "UPDATE member "
+					+ "SET profile = ? "
+					+ "WHERE username = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, profile);
+			psmt.setString(2, username);
+			affected = psmt.executeUpdate();
+		}
+		catch(SQLException e) {e.printStackTrace();}		
+		return affected;
 	}
 
 }

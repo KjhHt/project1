@@ -20,7 +20,11 @@
       <label for="exampleInputPassword1">비밀번호 확인</label>
       <input type="password" class="form-control" id="password_ck" name="password_ck" placeholder="Password">
     </div>
-        <div class="form-group">
+    <div class="form-group">
+      <label for="exampleInputEmail1">이름</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력하세요">
+    </div>
+    <div class="form-group">
       <label for="exampleInputEmail1">이메일</label>
       <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요">
     </div>
@@ -81,7 +85,7 @@
   </fieldset>
 </form>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 <script>
 	window.addEventListener("DOMContentLoaded", function() {
 		var form = document.querySelector('#joinForm');

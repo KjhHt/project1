@@ -11,6 +11,7 @@ import java.util.Vector;
 import javax.sql.DataSource;
 
 import jakarta.servlet.ServletContext;
+import model.board.PagingUtil;
 import model.board.DTO.BoardDTO;
 import service.DaoService;
 
@@ -44,9 +45,21 @@ public class BoardDAO implements DaoService<BoardDTO>{
 	@Override
 	public List<BoardDTO> selectList(Map map) {
 		List<BoardDTO> record = new Vector<>();
-		String sql = "SELECT * FROM board ORDER BY NO DESC";
+		String sql ="	SELECT *"
+				+ "		FROM ("
+				+ "		  SELECT B.*,RANK() OVER (ORDER BY no DESC) AS no_rank "
+				+ "		  FROM board B WHERE 1=1";
+		if(map.get("dateRange") != null) {
+			sql += " AND "+map.get("dateRange") + " >= " + map.get("dateRangeResult") ;
+		}
+		if(map.get("searchColumn") != null) {
+			sql += " AND "+map.get("searchColumn") + " LIKE '%"+map.get("searchWord")+"%' ";
+		}
+		sql+= ") WHERE no_rank BETWEEN ? AND ? ";
 		try {
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, map.get(PagingUtil.START).toString() );
+			psmt.setString(2, map.get(PagingUtil.END).toString() );
 			rs = psmt.executeQuery();
 			while(rs.next()) {
 				BoardDTO dto = new BoardDTO();
@@ -65,14 +78,51 @@ public class BoardDAO implements DaoService<BoardDTO>{
 
 	@Override
 	public BoardDTO selectOne(String... params) {
-		// TODO Auto-generated method stub
-		return null;
+		BoardDTO dto = null;
+		try {
+//			if(params.length >= 2 && (params[1].toUpperCase().startsWith("LIST"))) {
+//				psmt = conn.prepareStatement("UPDATE bbs SET hitcount=hitcount+1 WHERE no=?");
+//				psmt.setString(1, params[0]);
+//				psmt.executeUpdate();
+//			}
+			String sql = "SELECT b.*,name FROM board b JOIN member m ON b.username=m.username WHERE no=?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, params[0]);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				dto = new BoardDTO();
+				dto.setNo(rs.getString(1));
+				dto.setUsername(rs.getString(2));
+				dto.setTitle(rs.getString(3));
+				dto.setContent(rs.getString(4));
+				dto.setVisitcount(rs.getString(5));
+				dto.setPostdate(rs.getDate(6));
+				dto.setName(rs.getString(7));
+			}
+		}
+		catch(SQLException e) {e.printStackTrace();}
+		return dto;
 	}
 
 	@Override
 	public int getTotalRecordCount(Map map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int totalCount = 0;
+		String sql = "SELECT COUNT(*) FROM board WHERE 1=1";
+		if(map.get("dateRange") != null) {
+			sql += " AND "+map.get("dateRange") + " >= " + map.get("dateRangeResult") ;
+		}
+		if(map.get("searchColumn") != null) {
+			sql += " AND "+map.get("searchColumn") + " LIKE '%"+map.get("searchWord")+"%' ";
+		}
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			rs.next();
+			totalCount = rs.getInt(1);
+		}
+		catch(SQLException e) {e.printStackTrace();}
+		
+		return totalCount;
 	}
 
 	@Override

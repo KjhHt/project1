@@ -44,12 +44,14 @@ public class MemberEditController extends HttpServlet{
 		String selfintroduce = req.getParameter("selfintroduce");
 		String password = req.getParameter("password");
 		String email = req.getParameter("email");
+		String name = req.getParameter("name");
 		String education = req.getParameter("education");
 		String gender = req.getParameter("gender");
 		
 		dto.setUsername(username);
 		dto.setPassword(password);
 		dto.setEmail(email);
+		dto.setName(name);
 		dto.setEducation(education);
 		dto.setInters(inter);
 		dto.setSelfintroduce(selfintroduce);
@@ -63,7 +65,7 @@ public class MemberEditController extends HttpServlet{
 			resp.setContentType("text/html; charset=UTF-8");
 			out.println("<script>");
 			out.println("alert('수정 완료되었습니다!');");
-			out.println("location.href='"+req.getContextPath() + "/index.jsp';");
+			out.println("location.href='"+req.getContextPath() + "/Board/MyPage.kjh';");
 			out.println("</script>");
 			
 		}
