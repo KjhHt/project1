@@ -32,13 +32,13 @@
 			href="<c:url value="/Board/Insert.kjh"/>" role="button">글등록</a>
 		<div>
 			<select class="pl" id="pageSize" >
-				<option value="5" ${sessionScope.pageSize eq 5 ? 'selected':""}>5개씩</option>
-				<option value="10" ${sessionScope.pageSize eq 10 ? 'selected':""} >10개씩</option>
-				<option value="15" ${sessionScope.pageSize eq 15 ? 'selected':""}>15개씩</option>
-				<option value="20" ${sessionScope.pageSize eq 20 ? 'selected':""}>20개씩</option>
-				<option value="30" ${sessionScope.pageSize eq 30 ? 'selected':""}>30개씩</option>
-				<option value="40" ${sessionScope.pageSize eq 40 ? 'selected':""}>40개씩</option>
-				<option value="50" ${sessionScope.pageSize eq 50 ? 'selected':""}>50개씩</option>
+				<option value="5" ${sessionScope.pageSize eq 5 ? 'selected':''} >5개씩</option>
+				<option value="10" ${sessionScope.pageSize eq 10 ? 'selected':''}>10개씩</option>
+				<option value="15" ${sessionScope.pageSize eq 15 ? 'selected':''}>15개씩</option>
+				<option value="20" ${sessionScope.pageSize eq 25 ? 'selected':''}>20개씩</option>
+				<option value="30" ${sessionScope.pageSize eq 30 ? 'selected':''}>30개씩</option>
+				<option value="40" ${sessionScope.pageSize eq 40 ? 'selected':''}>40개씩</option>
+				<option value="50" ${sessionScope.pageSize eq 50 ? 'selected':''}>50개씩</option>
 			</select>
 		</div>
 	</div>
@@ -69,26 +69,27 @@
 		</tbody>
 	</table>
 	${paging}
-<form method="post">
+<form method="get">
+	<c:set var="nowPage" value="${param.nowPage==null?1:param.nowPage}"/>
+	<input type="hidden" name="nowPage" value="${nowPage}"/>
 	<div style="display: flex; align-items: center;">
-	    
 	    <select class="pl" name="postDate" style="width:142px; height:35px; line-height:35px; padding:0px 13px; margin-right:3px;">
 	        <option value="">전체기간</option>
-	        <option value="day">1일</option>
-	        <option value="week">1주</option>
-	        <option value="oneMonth">1개월</option>
-	        <option value="sixMonth">6개월</option>
-	        <option value="year">1년</option>
+	        <option value="day" ${param.postDate eq 'day' ? 'selected':''}>1일</option>
+	        <option value="week" ${param.postDate eq 'week' ? 'selected':''}>1주</option>
+	        <option value="oneMonth" ${param.postDate eq 'oneMonth' ? 'selected':''}>1개월</option>
+	        <option value="sixMonth" ${param.postDate eq 'sixMonth' ? 'selected':''}>6개월</option>
+	        <option value="year" ${param.postDate eq 'year' ? 'selected':''}>1년</option>
 	    </select>
 	    
 	    <select class="pl" name="searchColumn" style="width:142px; height:35px; line-height:35px; padding:0px 13px;">
-	        <option value="title">제목만</option>
-	        <option value="username">글작성자</option>
+	        <option value="title" ${param.searchColumn eq 'title' ? 'selected':''}>제목만</option>
+	        <option value="username" ${param.searchColumn eq 'username' ? 'selected':''}>글작성자</option>
 	        <option>댓글내용</option>
 	        <option>댓글작성자</option>
 	    </select>
 	    <div  style="width: 256px; margin-left: 10px; display: flex; align-items: center;">
-	        <input type="text" name="searchWord" class="form-control" placeholder="검색어를 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+	        <input type="text" name="searchWord" value="${param.searchWord }" class="form-control" placeholder="검색어를 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
 	        <button style="width:76px; height:36px; padding:0px;" class="btn btn-success" type="submit" id="button-addon2">검색</button>
 	    </div>
 	</div>
@@ -98,6 +99,26 @@
 
 
 <script>
+	document.querySelector('#pageSize').onchange = () => {
+		var pageSize = document.querySelector('#pageSize').value;
+		var data = {data : pageSize};
+	
+		fetch("<c:url value="/Board/List.kjh"/>",{
+			method:"POST",
+		    headers: {
+		      'Content-Type': 'application/json'
+		    },
+			body:JSON.stringify(data)})
+		.then(response => {
+			if(!response.ok){
+				throw new Error('서버 전송 실패');
+			}
+			location.reload();
+		})
+		.catch(err=>console.log('서버 전송 실패 : ',err));
+	
+	}
+	
 
 
 </script>

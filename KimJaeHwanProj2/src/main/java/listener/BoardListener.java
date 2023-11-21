@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
+import model.board.DAO.JWTTokens;
 
 @WebListener
 public class BoardListener implements ServletContextListener{
@@ -22,7 +23,7 @@ public class BoardListener implements ServletContextListener{
 		}
 		catch(Exception e) {e.printStackTrace();}
 	}
-
+	
 
 	
 	

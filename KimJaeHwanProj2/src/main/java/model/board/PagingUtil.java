@@ -65,7 +65,6 @@ public class PagingUtil {
 	public static String pagingBootStrapStyle(int totalRecordCount,int pageSize,int blockPage,int nowPage,String page){
 		
 		String pagingStr="<ul class=\"pagination justify-content-center\">";
-		
 		//1.전체 페이지 구하기
 		int totalPage= (int)(Math.ceil(((double)totalRecordCount/pageSize)));
 		
@@ -97,7 +96,6 @@ public class PagingUtil {
 			}
 		     else
 		    	 pagingStr+="<li class=\"page-item\"><a class=\"page-link\" href='"+page+NOWPAGE+"="+intTemp+"'>"+intTemp+"</a></li>";
-		       
 			intTemp = intTemp + 1;
 			blockCount = blockCount + 1;
 		
@@ -115,7 +113,6 @@ public class PagingUtil {
 					"<span >&raquo;</span>\r\n" + 
 					"</a>\r\n" + 
 					"</li>";
-							   
 		}
 		pagingStr+="</ul>";
 		return pagingStr;
@@ -134,12 +131,38 @@ public class PagingUtil {
 	 *        JSP페이지에서는 this키워드를 넘기면된다(jsp페이지가 서블릿이니까)
 	 */
 	public static <T extends DaoService> void setMapForPaging(Map map,T dao,HttpServletRequest request,HttpServlet servlet) {
+		//검색 데이타
+		if(request.getParameter("postDate")!= null && request.getParameter("postDate").length()!=0) {
+			String postDate = request.getParameter("postDate");
+			String dateRange = "TO_DATE(postdate, 'YY/MM/DD')";
+			String dateRangeResult="";
+			switch(postDate) {
+				case "day": dateRangeResult = "TRUNC(SYSDATE) - 1"; break;
+				case "week": dateRangeResult = "TRUNC(SYSDATE) - 7"; break;
+				case "oneMonth": dateRangeResult = "TRUNC(SYSDATE, 'MM') - 1"; break;
+				case "sixMonth": dateRangeResult = "TRUNC(SYSDATE, 'MM') - 6"; break;
+				case "year": dateRangeResult = "TRUNC(SYSDATE, 'YYYY') - 1"; break;
+			}
+			map.put("dateRange",dateRange);
+			map.put("dateRangeResult",dateRangeResult);
+			
+		}
+		if(request.getParameter("searchColumn")!= null && request.getParameter("searchColumn").length()!=0) {
+			String searchColumn = request.getParameter("searchColumn");
+			String searchWord = request.getParameter("searchWord");
+			map.put("searchColumn", searchColumn);
+			map.put("searchWord", searchWord);
+		}
+		
 		//페이징을 위한 로직 시작
 		//전체 레코드수
 		int totalRecordCount = dao.getTotalRecordCount(map);
 		//페이지 사이즈와 블락페이지는 서블릿 초기화 파라미터로 설정해 놓은 값
 		//페이지사이즈
 		int pageSize = Integer.parseInt(servlet.getInitParameter("PAGE-SIZE"));
+		if(request.getSession().getAttribute("pageSize") != null ) {
+			pageSize = Integer.parseInt( request.getSession().getAttribute("pageSize").toString() );
+		}
 		//블락페이지
 		int blockPage= Integer.parseInt(servlet.getInitParameter("BLOCK-PAGE"));
 		//전체 페이지수
@@ -149,6 +172,8 @@ public class PagingUtil {
 		//시작 및 끝 ROWNUM구하기
 		int start = (nowPage-1)*pageSize+1;
 		int end = nowPage*pageSize;	
+		
+		
 		//페이징을 위한 로직 끝	
 		map.put(START,start);	
 		map.put(END,end);	
