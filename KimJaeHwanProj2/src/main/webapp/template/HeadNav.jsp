@@ -13,10 +13,11 @@
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
    <script src="https://kit.fontawesome.com/0b4621b427.js" crossorigin="anonymous"></script>
    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-   <link href="/KimJaeHwanProj2/template/css/bootswatch.css" rel="stylesheet">
-   <link href="/KimJaeHwanProj2/template/css/_variables.scss" rel="stylesheet">
-   <link href="/KimJaeHwanProj2/template/css/bootstrap.css" rel="stylesheet">
-   <link href="/KimJaeHwanProj2/template/css/bootstrap.min.css" rel="stylesheet">
+   <link href="<c:url value='/template/css/_bootswatch.scss'/>" rel="stylesheet">
+   <link href="<c:url value='/template/css/_variables.scss'/>" rel="stylesheet">
+   <link href="<c:url value='/template/css/bootstrap.css'/>" rel="stylesheet">
+   <link href="<c:url value='/template/css/bootstrap.min.css'/>" rel="stylesheet">
+   
 </head>
 
 

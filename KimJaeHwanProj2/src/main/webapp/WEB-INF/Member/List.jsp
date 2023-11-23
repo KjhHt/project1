@@ -45,7 +45,7 @@
 	<hr class="my-4">
 
 
-	<table class="table table-hover">
+	<table class="table table-hover" >
 		<thead>
 			<tr style="text-align: center">
 				<th scope="col" colspan="2">제목</th>
@@ -55,12 +55,12 @@
 				<th scope="col">좋아요(미구현)</th>
 			</tr>
 		</thead>
-		<tbody>
-			<c:forEach var="list" items="${list}">
+		<tbody id="tableData">
+			<c:forEach var="list" items="${list}"  >
 				<tr>
 					<th scope="row" style="text-align: center">${list.no}</th>
-					<td><a href="<c:url value="/Board/View.kjh?no=${list.no}"/>">${list.title}</a></td>
-					<td style="text-align: center">${list.username}</td>
+					<td><a id="viewClick" href="<c:url value="/Board/View.kjh?no=${list.no}"/>">${list.title}</a></td>
+					<td style="text-align: center">${list.name}</td>
 					<td style="text-align: center">${list.postdate}</td>
 					<td style="text-align: center">${list.visitcount}</td>
 					<td style="text-align: center">0</td>
@@ -116,9 +116,18 @@
 			location.reload();
 		})
 		.catch(err=>console.log('서버 전송 실패 : ',err));
-	
 	}
 	
+	var tableData = document.querySelector('#tableData');
+	tableData.onclick = function(e){
+		if(e.target.id==='viewClick'){
+			var parentTd = e.target.parentElement;
+			var visitNum = parentTd.nextElementSibling.nextElementSibling.nextElementSibling;
+			var newCount = parseInt(visitNum.textContent, 10) + 1;
+			visitNum.textContent = newCount;
+		}
+			
+	}
 
 
 </script>

@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import jakarta.servlet.ServletContext;
 import model.board.PagingUtil;
 import model.board.DTO.BoardDTO;
+import model.board.DTO.CommentDTO;
 import service.DaoService;
 
 public class BoardDAO implements DaoService<BoardDTO>{
@@ -47,8 +48,8 @@ public class BoardDAO implements DaoService<BoardDTO>{
 		List<BoardDTO> record = new Vector<>();
 		String sql ="	SELECT *"
 				+ "		FROM ("
-				+ "		  SELECT B.*,RANK() OVER (ORDER BY no DESC) AS no_rank "
-				+ "		  FROM board B WHERE 1=1";
+				+ "		  SELECT B.*,name,RANK() OVER (ORDER BY no DESC) AS no_rank "
+				+ "		  FROM board B JOIN member M ON b.username = m.username WHERE 1=1";
 		if(map.get("dateRange") != null) {
 			sql += " AND "+map.get("dateRange") + " >= " + map.get("dateRangeResult") ;
 		}
@@ -69,6 +70,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				dto.setContent(rs.getString(4));
 				dto.setVisitcount(rs.getString(5));
 				dto.setPostdate(rs.getDate(6));
+				dto.setName(rs.getString(7));
 				record.add(dto);
 			}
 		}
@@ -80,11 +82,11 @@ public class BoardDAO implements DaoService<BoardDTO>{
 	public BoardDTO selectOne(String... params) {
 		BoardDTO dto = null;
 		try {
-//			if(params.length >= 2 && (params[1].toUpperCase().startsWith("LIST"))) {
-//				psmt = conn.prepareStatement("UPDATE bbs SET hitcount=hitcount+1 WHERE no=?");
-//				psmt.setString(1, params[0]);
-//				psmt.executeUpdate();
-//			}
+			if(params.length >= 2 && (params[1].toUpperCase().startsWith("LIST"))) {
+				psmt = conn.prepareStatement("UPDATE board SET visitcount=visitcount+1 WHERE no=?");
+				psmt.setString(1, params[0]);
+				psmt.executeUpdate();
+			}
 			String sql = "SELECT b.*,name FROM board b JOIN member m ON b.username=m.username WHERE no=?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, params[0]);
@@ -142,14 +144,75 @@ public class BoardDAO implements DaoService<BoardDTO>{
 
 	@Override
 	public int update(BoardDTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int affected = 0;
+		String sql = "UPDATE board SET title=?,content=? WHERE no=?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getContent());
+			psmt.setString(3, dto.getNo());
+			affected = psmt.executeUpdate();
+		}
+		catch(SQLException e) {e.printStackTrace();}
+		
+		return affected;
 	}
 
 	@Override
 	public int delete(BoardDTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int affected=0;
+		String sql="DELETE board WHERE no = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getNo());	
+			
+			affected=psmt.executeUpdate();
+		}
+		catch(SQLException e) {e.printStackTrace();}		
+		return affected;
+	}
+
+	public int likeCount(String no) {
+		int totalCount = 0;
+		String sql = "SELECT COUNT(*) FROM likes WHERE no = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1,no);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+			    totalCount = rs.getInt(1);
+			}
+		}
+		catch(SQLException e) {e.printStackTrace();}
+		return totalCount;
+	}
+
+	public List<CommentDTO> commentSelect(String no) {
+		List<CommentDTO> list = new Vector<>();
+		String sql = " SELECT c.*,name "
+				   + " FROM member m JOIN commenttable c ON m.username = c.username "
+				   + " WHERE no = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1,no);
+			rs = psmt.executeQuery();
+			int count = 0;
+				while(rs.next()) {
+					CommentDTO dto = new CommentDTO();
+					dto.setCno(rs.getString(1));
+					dto.setNo(rs.getString(2));
+					dto.setUsername(rs.getString(3));
+					dto.setCommentcontent(rs.getString(4));
+					dto.setCommentdate(rs.getDate(5));
+					dto.setName(rs.getString(6));
+					count++;
+					dto.setCount(String.valueOf(count));
+					list.add(dto);
+				}
+				
+			}
+			catch(SQLException e) {e.printStackTrace();}
+		return list;
 	}
 
 }

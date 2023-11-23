@@ -28,9 +28,11 @@ public class ListController extends HttpServlet {
 		Map map = new HashMap<>(); 
 		if ("POST".equalsIgnoreCase(req.getMethod())) {
 			InputStream is = req.getInputStream();
-			ObjectMapper objectMapper = new ObjectMapper();
-			Map jsonData = objectMapper.readValue(is, new TypeReference<Map>() {});
-			req.getSession().setAttribute("pageSize", jsonData.get("data") );
+			if (is.available() > 0) {
+				ObjectMapper objectMapper = new ObjectMapper();
+				Map jsonData = objectMapper.readValue(is, new TypeReference<Map>() {});
+				req.getSession().setAttribute("pageSize", jsonData.get("data") );
+			}
 		}
 		PagingUtil.setMapForPaging(map, dao, req, this);
 		int totalRecordCount = Integer.parseInt(map.get( PagingUtil.TOTAL_RECORD_COUNT).toString());
