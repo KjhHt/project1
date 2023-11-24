@@ -10,6 +10,8 @@ public class CommentDTO {
 	private Date commentdate;
 	private String name;
 	private String count;
+	private String replaywhether;
+	private String subcomment;
 	
 	public CommentDTO() {}
 	
@@ -56,6 +58,22 @@ public class CommentDTO {
 
 	public void setCount(String count) {
 		this.count = count;
+	}
+
+	public String getReplaywhether() {
+		return replaywhether;
+	}
+
+	public void setReplaywhether(String replaywhether) {
+		this.replaywhether = replaywhether;
+	}
+
+	public String getSubcomment() {
+		return subcomment;
+	}
+
+	public void setSubcomment(String subcomment) {
+		this.subcomment = subcomment;
 	}
 	
 	

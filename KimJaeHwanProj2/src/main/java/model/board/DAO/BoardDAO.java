@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -214,5 +215,91 @@ public class BoardDAO implements DaoService<BoardDTO>{
 			catch(SQLException e) {e.printStackTrace();}
 		return list;
 	}
+
+	public List<CommentDTO> firstCommentList(String no) {
+		List<CommentDTO> flist = new Vector<>();
+		String sql = " SELECT c.*,name "
+				   + " FROM member m JOIN commenttable c ON m.username = c.username "
+				   + " WHERE no = ? "
+				   + " AND replaywhether = 'F' ";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1,no);	
+			rs = psmt.executeQuery();	
+			while(rs.next()) {
+				CommentDTO dto = new CommentDTO();
+				dto.setCno(rs.getString(1));
+				dto.setNo(rs.getString(2));
+				dto.setUsername(rs.getString(3));
+				dto.setCommentcontent(rs.getString(4));
+				dto.setCommentdate(rs.getDate(5));
+				dto.setReplaywhether(rs.getString(6));
+				dto.setSubcomment(rs.getString(7));
+				dto.setName(rs.getString(8));
+				flist.add(dto);
+			}			
+		}
+		catch(SQLException e) {e.printStackTrace();}
+		return flist;
+	}
+
+	public List<CommentDTO> secondCommentList(String no) {
+		List<CommentDTO> slist = new Vector<>();
+		String sql = " SELECT c.*,name "
+				   + " FROM member m JOIN commenttable c ON m.username = c.username "
+				   + " WHERE no = ? "
+				   + " AND replaywhether = 'Y' ";	
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1,no);
+			rs = psmt.executeQuery();	
+			while(rs.next()) {
+				CommentDTO dto = new CommentDTO();
+				dto.setCno(rs.getString(1));
+				dto.setNo(rs.getString(2));
+				dto.setUsername(rs.getString(3));
+				dto.setCommentcontent(rs.getString(4));
+				dto.setCommentdate(rs.getDate(5));
+				dto.setReplaywhether(rs.getString(6));
+				dto.setSubcomment(rs.getString(7));
+				dto.setName(rs.getString(8));
+				slist.add(dto);
+			}			
+		}
+		catch(SQLException e) {e.printStackTrace();}
+		return slist;
+	}
+
+	public List<CommentDTO> commentCnoEqualSub(String cno) {
+	    List<CommentDTO> resultList = new ArrayList<>();
+	    String sql = "SELECT b.*, name " +
+	                 "FROM COMMENTTABLE a " +
+	                 "JOIN COMMENTTABLE b ON a.cno = b.subcomment " +
+	                 "JOIN member m ON m.username = b.username " +
+	                 "WHERE b.subcomment = ? " +
+	                 "ORDER BY b.subcomment, b.commentdate ASC";
+		    try {
+		        psmt = conn.prepareStatement(sql);
+		        psmt.setString(1, cno);
+		        rs = psmt.executeQuery();
+	
+		        while (rs.next()) {
+		            CommentDTO dto = new CommentDTO();
+		            dto.setCno(rs.getString(1));
+		            dto.setNo(rs.getString(2));
+		            dto.setUsername(rs.getString(3));
+		            dto.setCommentcontent(rs.getString(4));
+		            dto.setCommentdate(rs.getDate(5));
+		            dto.setReplaywhether(rs.getString(6));
+		            dto.setSubcomment(rs.getString(7));
+		            dto.setName(rs.getString(8));
+		            resultList.add(dto);
+		        }
+		    } 
+		    catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return resultList;
+		}
 
 }

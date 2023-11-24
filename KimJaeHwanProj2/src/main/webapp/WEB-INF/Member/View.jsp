@@ -47,11 +47,13 @@
 			<div class="comment_inbox">
 				<strong class="d-block mb-2" style="font-size: 17px">댓글</strong>
 					<c:if test="${commentCount ne 0}">
-						<c:forEach var="c" items="${commentList}">
+						<c:forEach var="c" items="${resultList}">
 							<hr>
-							${c.name}
-							${c.commentdate}<br/>
-							${c.commentcontent}
+							<div ${c.replaywhether eq 'Y' ? "style='padding-left:50px;'" : "" } >
+								${c.name}
+								${c.commentdate}<br/>
+								${c.commentcontent}
+							</div>
 							<hr>
 						</c:forEach>
 					</c:if>
@@ -71,7 +73,6 @@
 		</div>
 	</div>
 </div>
-	    
 	    
 	    <a class="btn btn-primary btn-lg"
 			href="<c:url value="/Board/Insert.kjh"/>" role="button">글쓰기</a>
