@@ -73,4 +73,10 @@ public class ViewController extends HttpServlet{
 		req.getRequestDispatcher("/WEB-INF/Member/View.jsp").forward(req, resp);
 	}
 	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("DOPOST");
+		super.doPost(req, resp);
+	}
+	
 }

@@ -59,15 +59,14 @@
 					</c:if>
 				<br /> 
 				김재환
-				<textarea placeholder="댓글을 남겨보세요" rows="1" class="form-control"></textarea>
+				<form id="commentForm" action="<c:url value="/Board/CommentInsert.kjh"/>" method="post">
+					<textarea placeholder="댓글을 남겨보세요" rows="1" name="commentcontent" class="form-control"></textarea>
+					<input type="hidden" name="no" value="${param.no }"/>
+				</form>
 			</div>
 			<div class="comment_attach mt-2 d-flex align-items-center">
-				<label for="attach3" class="button_file m-0 mr-2"> <input
-					id="attach3" type="file" title="사진첨부" accept="image/*, image/heic"
-					class="d-none">
-				</label>
 				<div class="register_box ml-auto">
-					<a href="#" role="button" class="btn btn-primary">등록</a>
+					<a href="#" role="button" class="btn btn-primary" onclick="submitCommentForm()">등록</a>
 				</div>
 			</div>
 		</div>
@@ -98,6 +97,10 @@
 		}
 	}
 
+    function submitCommentForm() {
+        document.getElementById("commentForm").submit();
+    }
+	
 
 </script>
 
