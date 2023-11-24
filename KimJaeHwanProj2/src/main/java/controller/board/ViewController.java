@@ -3,7 +3,6 @@ package controller.board;
 import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
-import java.util.stream.Collectors;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,17 +28,14 @@ public class ViewController extends HttpServlet{
 		int likeRecord = dao.likeCount(no);
 		req.setAttribute("likeRecord", likeRecord);
 		
-		// 게시글번호로 댓글내용 다 가져오기
+		// 게시글번호로 댓글내용 다 가져오기였지만.. 사이즈만 쓰도록..
 		List<CommentDTO> commentList = dao.commentSelect(no);
 		req.setAttribute("commentList", commentList);
 		req.setAttribute("commentCount", commentList.size());
 		
-		//테스트용
+		//댓글 게시글 뿌려주기
 		List<CommentDTO> firstCommentList = dao.firstCommentList(no);
-		System.out.println(firstCommentList.size());
 		List<CommentDTO> secondCommentList = dao.secondCommentList(no);
-		System.out.println("firstCommentList.size() : "+firstCommentList.size());
-		System.out.println("secondCommentList.size() : "+secondCommentList.size());
 		List<CommentDTO> resultList = new Vector<>();
 		boolean test = false;
 		int size = firstCommentList.size();
@@ -63,10 +59,16 @@ public class ViewController extends HttpServlet{
 		        }
 		        test = false;
 		    }
-		    System.out.println("7이나와야됨" + resultList.size());
 		}
 		
-		
+//		for (CommentDTO commentDTO : resultList) {
+//		    String content = commentDTO.getCommentcontent();
+//		    Date date = commentDTO.getCommentdate();
+//		    SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+//	        String formattedDate = sdf.format(date);
+//		    // 원하는 로직 수행
+//		    System.out.println("content: " + content + ", date: " + formattedDate);
+//		}
 		req.setAttribute("resultList", resultList);
 		//테스트용
 		dao.close();

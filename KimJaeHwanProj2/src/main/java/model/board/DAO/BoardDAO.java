@@ -221,7 +221,8 @@ public class BoardDAO implements DaoService<BoardDTO>{
 		String sql = " SELECT c.*,name "
 				   + " FROM member m JOIN commenttable c ON m.username = c.username "
 				   + " WHERE no = ? "
-				   + " AND replaywhether = 'F' ";
+				   + " AND replaywhether = 'F' "
+				   + " ORDER BY commentdate ";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1,no);	
@@ -301,5 +302,19 @@ public class BoardDAO implements DaoService<BoardDTO>{
 		    }
 		    return resultList;
 		}
+
+	public int insertComment(CommentDTO dto) {
+		int affected=0;
+		String sql="INSERT INTO commenttable VALUES(SEQ_comment.NEXTVAL,?,?,?,DEFAULT,DEFAULT,0)";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getNo());
+			psmt.setString(2, dto.getUsername());
+			psmt.setString(3, dto.getCommentcontent());	
+			affected=psmt.executeUpdate();
+		}
+		catch(SQLException e) {e.printStackTrace();}		
+		return affected;
+	}
 
 }
