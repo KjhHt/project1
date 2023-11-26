@@ -18,8 +18,7 @@ public class CommentInsertController extends HttpServlet{
 		String username = (String) req.getSession().getAttribute("username");
 		String no = req.getParameter("no");
 		String content = req.getParameter("commentcontent");
-		System.out.println(no);
-		System.out.println(content);
+		
 		
 		BoardDAO dao = new BoardDAO(getServletContext());
 		CommentDTO dto = new CommentDTO();
@@ -28,7 +27,6 @@ public class CommentInsertController extends HttpServlet{
 		dto.setCommentcontent(content);
 		int result = dao.insertComment(dto);
 		
-		System.out.println(result+"1이면 성공~~");
 		if(result==0) {
 			System.out.println("입력실패");
 		}

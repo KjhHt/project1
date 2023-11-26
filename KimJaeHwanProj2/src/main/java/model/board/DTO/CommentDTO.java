@@ -12,6 +12,7 @@ public class CommentDTO {
 	private String count;
 	private String replaywhether;
 	private String subcomment;
+	private String subname;
 	
 	public CommentDTO() {}
 	
@@ -74,6 +75,14 @@ public class CommentDTO {
 
 	public void setSubcomment(String subcomment) {
 		this.subcomment = subcomment;
+	}
+
+	public String getSubname() {
+		return subname;
+	}
+
+	public void setSubname(String subname) {
+		this.subname = subname;
 	}
 	
 	

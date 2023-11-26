@@ -188,33 +188,33 @@ public class BoardDAO implements DaoService<BoardDTO>{
 		return totalCount;
 	}
 
-	public List<CommentDTO> commentSelect(String no) {
-		List<CommentDTO> list = new Vector<>();
-		String sql = " SELECT c.*,name "
-				   + " FROM member m JOIN commenttable c ON m.username = c.username "
-				   + " WHERE no = ?";
-		try {
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1,no);
-			rs = psmt.executeQuery();
-			int count = 0;
-				while(rs.next()) {
-					CommentDTO dto = new CommentDTO();
-					dto.setCno(rs.getString(1));
-					dto.setNo(rs.getString(2));
-					dto.setUsername(rs.getString(3));
-					dto.setCommentcontent(rs.getString(4));
-					dto.setCommentdate(rs.getDate(5));
-					dto.setName(rs.getString(6));
-					count++;
-					dto.setCount(String.valueOf(count));
-					list.add(dto);
-				}
-				
-			}
-			catch(SQLException e) {e.printStackTrace();}
-		return list;
-	}
+//	public List<CommentDTO> commentSelect(String no) {
+//		List<CommentDTO> list = new Vector<>();
+//		String sql = " SELECT c.*,name "
+//				   + " FROM member m JOIN commenttable c ON m.username = c.username "
+//				   + " WHERE no = ?";
+//		try {
+//			psmt = conn.prepareStatement(sql);
+//			psmt.setString(1,no);
+//			rs = psmt.executeQuery();
+//			int count = 0;
+//				while(rs.next()) {
+//					CommentDTO dto = new CommentDTO();
+//					dto.setCno(rs.getString(1));
+//					dto.setNo(rs.getString(2));
+//					dto.setUsername(rs.getString(3));
+//					dto.setCommentcontent(rs.getString(4));
+//					dto.setCommentdate(rs.getDate(5));
+//					dto.setName(rs.getString(6));
+//					count++;
+//					dto.setCount(String.valueOf(count));
+//					list.add(dto);
+//				}
+//				
+//			}
+//			catch(SQLException e) {e.printStackTrace();}
+//		return list;
+//	}
 
 	public List<CommentDTO> firstCommentList(String no) {
 		List<CommentDTO> flist = new Vector<>();
@@ -236,7 +236,8 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				dto.setCommentdate(rs.getDate(5));
 				dto.setReplaywhether(rs.getString(6));
 				dto.setSubcomment(rs.getString(7));
-				dto.setName(rs.getString(8));
+				dto.setSubname(rs.getString(8));
+				dto.setName(rs.getString(9));
 				flist.add(dto);
 			}			
 		}
@@ -263,7 +264,8 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				dto.setCommentdate(rs.getDate(5));
 				dto.setReplaywhether(rs.getString(6));
 				dto.setSubcomment(rs.getString(7));
-				dto.setName(rs.getString(8));
+				dto.setSubname(rs.getString(8));
+				dto.setName(rs.getString(9));
 				slist.add(dto);
 			}			
 		}
@@ -293,7 +295,8 @@ public class BoardDAO implements DaoService<BoardDTO>{
 		            dto.setCommentdate(rs.getDate(5));
 		            dto.setReplaywhether(rs.getString(6));
 		            dto.setSubcomment(rs.getString(7));
-		            dto.setName(rs.getString(8));
+					dto.setSubname(rs.getString(8));
+					dto.setName(rs.getString(9));
 		            resultList.add(dto);
 		        }
 		    } 
@@ -305,7 +308,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 
 	public int insertComment(CommentDTO dto) {
 		int affected=0;
-		String sql="INSERT INTO commenttable VALUES(SEQ_comment.NEXTVAL,?,?,?,DEFAULT,DEFAULT,0)";
+		String sql="INSERT INTO commenttable VALUES(SEQ_comment.NEXTVAL,?,?,?,DEFAULT,DEFAULT,0,DEFAULT)";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getNo());
@@ -315,6 +318,73 @@ public class BoardDAO implements DaoService<BoardDTO>{
 		}
 		catch(SQLException e) {e.printStackTrace();}		
 		return affected;
+	}
+
+	public int insertSubComment(CommentDTO dto) {
+		int affected=0;
+		String sql="INSERT INTO commenttable VALUES(SEQ_comment.NEXTVAL,?,?,?,DEFAULT,?,?,?)";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getNo());
+			psmt.setString(2, dto.getUsername());
+			psmt.setString(3, dto.getCommentcontent());	
+			psmt.setString(4, dto.getReplaywhether());	
+			psmt.setString(5, dto.getCno());	
+			psmt.setString(6, dto.getSubname());	
+			affected=psmt.executeUpdate();
+		}
+		catch(SQLException e) {e.printStackTrace();}		
+		return affected;
+	}
+
+	public boolean likeCountUp(String no, String username) {
+		boolean affected=false;
+		String sql="INSERT INTO likes VALUES(SEQ_likes.NEXTVAL,?,?,DEFAULT)";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, no);
+			psmt.setString(2, username);	
+			psmt.executeUpdate();
+			affected = true;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			affected = false;
+		}	
+		return affected;
+	}
+
+	public boolean likeCountDown(String no, String username) {
+		boolean affected=false;
+		String sql="DELETE likes WHERE no=? AND username=?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, no);
+			psmt.setString(2, username);	
+			psmt.executeUpdate();
+			affected = true;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			affected = false;
+		}	
+		return affected;
+	}
+
+	public int isLike(String no, String username) {
+		int totalCount = 0;
+		String sql = "SELECT COUNT(*) FROM likes WHERE no = ? AND username = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1,no);
+			psmt.setString(2,username);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+			    totalCount = rs.getInt(1);
+			}
+		}
+		catch(SQLException e) {e.printStackTrace();}
+		return totalCount;
 	}
 
 }
