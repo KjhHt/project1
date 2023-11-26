@@ -52,18 +52,30 @@
 				<th scope="col">작성자</th>
 				<th scope="col">작성일</th>
 				<th scope="col">조회</th>
-				<th scope="col">좋아요(미구현)</th>
+				<th scope="col">좋아요</th>
 			</tr>
 		</thead>
 		<tbody id="tableData">
 			<c:forEach var="list" items="${list}"  >
 				<tr>
 					<th scope="row" style="text-align: center">${list.no}</th>
-					<td><a id="viewClick" href="<c:url value="/Board/View.kjh?no=${list.no}"/>">${list.title}</a></td>
+					<td>
+						<a id="viewClick" href="<c:url value="/Board/View.kjh?no=${list.no}"/>">${list.title}</a>
+						<c:if test="${list.commentCount ne 0}">
+							<span class="text-danger">[${list.commentCount}]</span>
+						</c:if>
+						<c:if test="${list.attachFile ne 'X'}">
+							<span>
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+								  <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0z"/>
+								</svg>
+							</span>
+						</c:if>
+					</td>
 					<td style="text-align: center">${list.name}</td>
 					<td style="text-align: center">${list.postdate}</td>
 					<td style="text-align: center">${list.visitcount}</td>
-					<td style="text-align: center">0</td>
+					<td style="text-align: center">${list.likecount }</td>
 				</tr>
 			</c:forEach>
 		</tbody>

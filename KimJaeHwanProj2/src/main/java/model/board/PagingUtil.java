@@ -77,7 +77,7 @@ public class PagingUtil {
 					"</a>\r\n" + 
 					"</li>\r\n" + 
 					"<li >\r\n" + 
-					"<a class=\"page-link\" href='"+page+NOWPAGE+"="+(intTemp -blockPage)+"' >\r\n" + 
+					"<a class=\"page-link\" href='"+page+NOWPAGE+"="+(intTemp -1)+"' >\r\n" + 
 					"<span>&lsaquo;</span>\r\n" + 
 					"</a>\r\n" + 
 					"</li>";   

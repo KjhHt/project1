@@ -26,6 +26,7 @@ public class IdCheckController extends HttpServlet{
 		//쿼리결과반송
 		MemberDAO dao = new MemberDAO(getServletContext());
 		boolean isDuplication = dao.isDuplicationId(username);
+		dao.close();
 		resp.getWriter().write(String.valueOf(isDuplication));
 	}
 }

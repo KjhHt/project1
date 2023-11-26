@@ -10,8 +10,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.board.DAO.BoardDAO;
+import model.board.DAO.MemberDAO;
 import model.board.DTO.BoardDTO;
 import model.board.DTO.CommentDTO;
+import model.board.DTO.MemberDTO;
 
 @WebServlet("/Board/View.kjh")
 public class ViewController extends HttpServlet{
@@ -19,26 +21,30 @@ public class ViewController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String username = (String) req.getSession().getAttribute("username");
-		req.setAttribute("username", username);
-		
+		MemberDAO dao2 = new MemberDAO(getServletContext());
+		MemberDTO info = dao2.selectOne(username);
+		req.setAttribute("name", info.getName());
+		dao2.close();
 		String no = req.getParameter("no");
 		BoardDAO dao = new BoardDAO(getServletContext());
 		// 조회수 증가 + view정보
 		String url = req.getHeader("referer").substring(req.getHeader("referer").lastIndexOf("/")+1);
 		BoardDTO record = dao.selectOne(no,url);
+        int fileCount = countFiles(record.getAttachFile());
+        req.setAttribute("fileCount", fileCount);
 		req.setAttribute("record", record);
 		// 좋아요 갯수 가져오기
 		int likeRecord = dao.likeCount(no);
 		req.setAttribute("likeRecord", likeRecord);
 		// 좋아요 누른여부? 1:누른적있음 0:누른적없음
 		int isLike = dao.isLike(no,username);
-		System.out.println(isLike);
 		req.setAttribute("isLike", isLike);
 		
 		//댓글 게시글 뿌려주기
 		List<CommentDTO> firstCommentList = dao.firstCommentList(no);
 		List<CommentDTO> secondCommentList = dao.secondCommentList(no);
 		List<CommentDTO> resultList = new Vector<>();
+		
 		boolean test = false;
 		int size = firstCommentList.size();
 		if (secondCommentList.size() != 0) {
@@ -63,10 +69,14 @@ public class ViewController extends HttpServlet{
 		    }
 		}
 		
-
-		req.setAttribute("commentCount", resultList.size());
-		req.setAttribute("resultList", resultList);
-
+		if(secondCommentList.size()!=0) {
+			req.setAttribute("commentCount", resultList.size());
+			req.setAttribute("resultList", resultList);
+		}
+		else {
+			req.setAttribute("commentCount", firstCommentList.size());
+			req.setAttribute("resultList", firstCommentList);
+		}
 		dao.close();
 		req.getRequestDispatcher("/WEB-INF/Member/View.jsp").forward(req, resp);
 	}
@@ -76,5 +86,14 @@ public class ViewController extends HttpServlet{
 		System.out.println("DOPOST");
 		super.doPost(req, resp);
 	}
+	
+    private static int countFiles(String attachFile) {
+        if ("X".equals(attachFile.trim())) {
+            return 0;
+        }
+        String[] files = attachFile.split(",");
+        return files.length > 0 ? files.length : 0;
+    }
+    
 	
 }

@@ -18,6 +18,7 @@ public class MyPageController extends HttpServlet{
 		String username = (String) req.getSession().getAttribute("username");
 		MemberDAO dao = new MemberDAO(getServletContext());
 		MemberDTO list = dao.selectOne(username);
+		dao.close();
 		req.setAttribute("list", list);
 		req.getRequestDispatcher("/WEB-INF/Member/Member_MyPage.jsp").forward(req, resp); 
 	}

@@ -25,6 +25,7 @@ public class ListController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		BoardDAO dao = new BoardDAO(getServletContext());
+		
 		Map map = new HashMap<>(); 
 		if ("POST".equalsIgnoreCase(req.getMethod())) {
 			InputStream is = req.getInputStream();
@@ -51,7 +52,6 @@ public class ListController extends HttpServlet {
 													+"&searchWord="+searchWord+"&";
 		}
 		String pagingString=PagingUtil.pagingBootStrapStyle(totalRecordCount, pageSize, blockPage, nowPage,url);
-		
 		List<BoardDTO> list = dao.selectList(map);
 		dao.close();
 		req.setAttribute("list", list);

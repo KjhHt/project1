@@ -15,11 +15,6 @@ import model.board.DAO.MemberDAO;
 
 @WebServlet("/Board/ProfileUpdate.kjh")
 public class ProfileUpdateController extends HttpServlet{
-
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("doGet방식");
-	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -6,13 +6,17 @@
 
 <div class="jumbotron">
 
-	<form action="<c:url value="/Board/Insert.kjh"/>" method="post">
+	<form action="<c:url value="/Board/Insert.kjh"/>" method="post" enctype="multipart/form-data">
 	  <fieldset>
 	    <legend>입력</legend>
 	    
 	    <div class="form-group">
 	      <label for="exampleInputEmail1">제목</label>
 	      <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요">
+	    </div>
+	    <div class="form-group">
+	      <label for="">첨부파일</label>
+	      <input type="file" class="form-control" id="file" name="file" multiple>
 	    </div>
 	    <div class="form-group">
 	      <label for="exampleTextarea">내용</label>

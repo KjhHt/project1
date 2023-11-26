@@ -11,6 +11,10 @@ public class BoardDTO {
 	private Date postdate;
 	private String name;
 	
+	private String likecount;
+	private String attachFile;
+	private String commentCount;
+	
 	public BoardDTO() {}
 	
 	public String getNo() {
@@ -56,6 +60,30 @@ public class BoardDTO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getLikecount() {
+		return likecount;
+	}
+
+	public void setLikecount(String likecount) {
+		this.likecount = likecount;
+	}
+
+	public String getAttachFile() {
+		return attachFile;
+	}
+
+	public void setAttachFile(String attachFile) {
+		this.attachFile = attachFile;
+	}
+
+	public String getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(String commentCount) {
+		this.commentCount = commentCount;
 	}
 	
 	

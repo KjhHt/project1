@@ -49,7 +49,9 @@ public class BoardDAO implements DaoService<BoardDTO>{
 		List<BoardDTO> record = new Vector<>();
 		String sql ="	SELECT *"
 				+ "		FROM ("
-				+ "		  SELECT B.*,name,RANK() OVER (ORDER BY no DESC) AS no_rank "
+				+ "		  SELECT B.*,name,RANK() OVER (ORDER BY no DESC) AS no_rank ,"
+				+ "       (SELECT COUNT(*) FROM likes WHERE no = B.no) AS likecount ,"
+				+ "		  (SELECT COUNT(*) FROM commenttable WHERE no = B.no) AS commentcount "
 				+ "		  FROM board B JOIN member M ON b.username = m.username WHERE 1=1";
 		if(map.get("dateRange") != null) {
 			sql += " AND "+map.get("dateRange") + " >= " + map.get("dateRangeResult") ;
@@ -71,7 +73,10 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				dto.setContent(rs.getString(4));
 				dto.setVisitcount(rs.getString(5));
 				dto.setPostdate(rs.getDate(6));
-				dto.setName(rs.getString(7));
+				dto.setAttachFile(rs.getString(7));
+				dto.setName(rs.getString(8));
+				dto.setLikecount(rs.getString(10));
+				dto.setCommentCount(rs.getString(11));
 				record.add(dto);
 			}
 		}
@@ -88,7 +93,9 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				psmt.setString(1, params[0]);
 				psmt.executeUpdate();
 			}
-			String sql = "SELECT b.*,name FROM board b JOIN member m ON b.username=m.username WHERE no=?";
+			String sql = "SELECT b.*,name "
+					+ "FROM board b JOIN member m ON b.username=m.username "
+					+ "WHERE no=?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, params[0]);
 			rs = psmt.executeQuery();
@@ -100,7 +107,8 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				dto.setContent(rs.getString(4));
 				dto.setVisitcount(rs.getString(5));
 				dto.setPostdate(rs.getDate(6));
-				dto.setName(rs.getString(7));
+				dto.setAttachFile(rs.getString(7));
+				dto.setName(rs.getString(8));
 			}
 		}
 		catch(SQLException e) {e.printStackTrace();}
@@ -131,12 +139,13 @@ public class BoardDAO implements DaoService<BoardDTO>{
 	@Override
 	public int insert(BoardDTO dto) {
 		int affected=0;
-		String sql="INSERT INTO board VALUES(SEQ_BOARD.NEXTVAL,?,?,?,DEFAULT,DEFAULT)";
+		String sql="INSERT INTO board VALUES(SEQ_BOARD.NEXTVAL,?,?,?,DEFAULT,DEFAULT,?)";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getUsername());
 			psmt.setString(2, dto.getTitle());
 			psmt.setString(3, dto.getContent());	
+			psmt.setString(4, dto.getAttachFile());	
 			affected=psmt.executeUpdate();
 		}
 		catch(SQLException e) {e.printStackTrace();}		
@@ -187,34 +196,6 @@ public class BoardDAO implements DaoService<BoardDTO>{
 		catch(SQLException e) {e.printStackTrace();}
 		return totalCount;
 	}
-
-//	public List<CommentDTO> commentSelect(String no) {
-//		List<CommentDTO> list = new Vector<>();
-//		String sql = " SELECT c.*,name "
-//				   + " FROM member m JOIN commenttable c ON m.username = c.username "
-//				   + " WHERE no = ?";
-//		try {
-//			psmt = conn.prepareStatement(sql);
-//			psmt.setString(1,no);
-//			rs = psmt.executeQuery();
-//			int count = 0;
-//				while(rs.next()) {
-//					CommentDTO dto = new CommentDTO();
-//					dto.setCno(rs.getString(1));
-//					dto.setNo(rs.getString(2));
-//					dto.setUsername(rs.getString(3));
-//					dto.setCommentcontent(rs.getString(4));
-//					dto.setCommentdate(rs.getDate(5));
-//					dto.setName(rs.getString(6));
-//					count++;
-//					dto.setCount(String.valueOf(count));
-//					list.add(dto);
-//				}
-//				
-//			}
-//			catch(SQLException e) {e.printStackTrace();}
-//		return list;
-//	}
 
 	public List<CommentDTO> firstCommentList(String no) {
 		List<CommentDTO> flist = new Vector<>();

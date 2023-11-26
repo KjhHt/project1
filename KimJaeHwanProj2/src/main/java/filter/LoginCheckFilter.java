@@ -22,7 +22,8 @@ public class LoginCheckFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
 		String token = JWTTokens.getToken(req, req.getServletContext().getInitParameter("COOKIE-NAME"));
 		boolean isAuthenticated = JWTTokens.verifyToken(token);
-		if(!isAuthenticated) {
+		String username = (String) req.getSession().getAttribute("username");
+		if(!isAuthenticated || username==null) {
 			HttpServletResponse resp=(HttpServletResponse)response;
 			resp.setContentType("text/html; charset=UTF-8");
 			PrintWriter out= resp.getWriter();

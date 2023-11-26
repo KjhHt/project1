@@ -20,7 +20,7 @@ public class MemberEditController extends HttpServlet{
 		String username = (String) req.getSession().getAttribute("username");
 		MemberDTO memberDto = dao.selectOne(username);
 		req.setAttribute("memberDto", memberDto);
-		System.out.println(memberDto.getGender());
+		dao.close();
 		req.getRequestDispatcher("/WEB-INF/Member/Member_Edit.jsp").forward(req, resp);		
 	}
 	

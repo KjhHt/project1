@@ -39,7 +39,7 @@ public class CommentSubInsertController extends HttpServlet{
 		if(result==0) {
 			System.out.println("입력실패");
 		}
-			
+		dao.close();	
 		resp.sendRedirect(req.getContextPath()+"/Board/View.kjh?no="+no);
 	}
 	
