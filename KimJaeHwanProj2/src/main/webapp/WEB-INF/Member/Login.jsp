@@ -19,6 +19,10 @@
 					type="password" class="form-control" placeholder="Default input"
 					id="password" name="password" />
 			</div>
+		    <div class="custom-control custom-checkbox">
+				<input type="checkbox" class="custom-control-input" name="idSave" value="N" id="idSave" />
+				<label class="custom-control-label" for="idSave">아이디 저장</label>
+			</div>
 		</form>
 		<p class="lead">
 			<a class="btn btn-primary btn-lg" href="#" role="button"
@@ -45,8 +49,21 @@
 		document.getElementById('frm').submit();
 	}
 	
-	
-	
-	
+	//아이디 로컬스토리지 저장,
+	var idSave = document.getElementById('idSave');
+	var usernameInput = document.getElementById('username');
+	if (idSave) {
+	    if (localStorage.getItem('idSave')) {
+	    	usernameInput.value = localStorage.getItem('idSave');
+	        idSave.checked = true;
+	    }
+
+	    idSave.onchange = function () {
+	        if (idSave.checked)
+	            localStorage.setItem('idSave', document.getElementById("username").value);
+	        else
+	            localStorage.removeItem('idSave');
+	    };
+	}
 	
 </script>
