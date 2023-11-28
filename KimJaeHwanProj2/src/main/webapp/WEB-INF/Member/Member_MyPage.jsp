@@ -5,9 +5,6 @@
 
 <div class="jumbotron">
 	<c:if test="${not empty username}">
-		<a class="btn btn-success btn-lg"
-			href="<c:url value="/Board/EditMember.kjh"/>" role="button">회원정보수정</a>
-	</p>
 
 
 	<!-- 여기에다가 프로필 -->
@@ -39,15 +36,15 @@
 						
 					</div>
 					<div class="flex-grow-1 ms-3">
-						<h3>(이름)${list.name }님</h3>
-						<p>(이메일)${list.email }</p>
+						<h3>${list.name }님</h3>
+						<p>${list.email }</p>
 						<div>
 							<i class="fa-solid fa-location-dot d-inline-block"
 								style="color: #6fbaf8"></i> <span
-								style="color: #6fbaf8">(성별)${list.gender }</span>
+								style="color: #6fbaf8">${list.gender }</span>
 						</div>
-						<button class="btn text-white mt-3"
-							style="background-color: #6fbaf8">연락하기</button>
+		<a class="btn btn-success"
+			href="<c:url value="/Board/EditMember.kjh"/>" role="button">회원정보수정</a>
 					</div>
 				</div>
 			</div>
@@ -60,7 +57,7 @@
 						<p>${list.inters }</p>
 					</div>
 					<div class="col-6">
-						<p>학력(숫자변환)</p>
+						<p>학력</p>
 					</div>
 					<div class="col-6">
 						<p>${list.education }</p>
@@ -95,6 +92,7 @@
 		.then(function(response){
 			if(response.status === 200){
 				updateProfile(selectedValue);
+				location.reload();
 				alert('프로필 업데이트 완료!');
 			}
 			else{

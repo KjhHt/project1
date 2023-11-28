@@ -118,7 +118,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 	@Override
 	public int getTotalRecordCount(Map map) {
 		int totalCount = 0;
-		String sql = "SELECT COUNT(*) FROM board WHERE 1=1";
+		String sql = "SELECT COUNT(*) FROM board b JOIN member m ON b.username=m.username WHERE 1=1";
 		if(map.get("dateRange") != null) {
 			sql += " AND "+map.get("dateRange") + " >= " + map.get("dateRangeResult") ;
 		}

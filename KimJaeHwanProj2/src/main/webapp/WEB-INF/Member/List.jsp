@@ -44,7 +44,6 @@
 	</div>
 	<hr class="my-4">
 
-
 	<table class="table table-hover" >
 		<thead>
 			<tr style="text-align: center">
@@ -96,9 +95,7 @@
 	    
 	    <select class="pl" name="searchColumn" style="width:142px; height:35px; line-height:35px; padding:0px 13px;">
 	        <option value="title" ${param.searchColumn eq 'title' ? 'selected':''}>제목만</option>
-	        <option value="username" ${param.searchColumn eq 'username' ? 'selected':''}>글작성자</option>
-	        <option>댓글내용</option>
-	        <option>댓글작성자</option>
+	        <option value="name" ${param.searchColumn eq 'name' ? 'selected':''}>글작성자</option>
 	    </select>
 	    <div  style="width: 256px; margin-left: 10px; display: flex; align-items: center;">
 	        <input type="text" name="searchWord" value="${param.searchWord }" class="form-control" placeholder="검색어를 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">

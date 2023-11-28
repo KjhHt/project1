@@ -3,36 +3,70 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/template/HeadNav.jsp" />
 
-<div class="jumbotron">
-	<c:if test="${empty username}">
-		<h1 class="display-4">로그인</h1>
-		<p class="lead" style="text-align: center">${ERROR}</p>
-		<hr class="my-4">
-		<form id="frm" action="<c:url value="/Login.kjh"/>" method="post">
-			<div class="form-group">
-				<label class="col-form-label" for="inputDefault">아이디</label> <input
-					type="text" class="form-control" placeholder="Default input"
-					id="username" name="username" />
-			</div>
-			<div class="form-group">
-				<label class="col-form-label" for="inputDefault">비밀번호</label> <input
-					type="password" class="form-control" placeholder="Default input"
-					id="password" name="password" />
-			</div>
-		    <div class="custom-control custom-checkbox">
+
+
+						
+						
+<c:if test="${empty username}">	
+<div class="jumbotron">				
+<div class="container py-5" id="hometop">
+  <div class="row pt-5 mt-5 align-items-center justify-content-center justify-content-lg-between text-center text-lg-left flex-lg-row-reverse">
+    <div class="col-md-9 col-lg-6 col-xl-5 mb-4 mb-lg-0 pr-lg-5 pr-xl-0">
+      <div>
+        <h1 class="display-4">게시판 구현</h1>
+        <p class="lead">회원이 아니신가요?? &rarr;
+        	<a class="text-danger" href="<c:url value="/JoinMember.kjh"/>">회원가입</a>
+        </p>
+        <div class="mt-4 mt-md-5">
+          <form id="frm" action="<c:url value="/Login.kjh"/>" method="post">
+            <input class="form-control h-100" type="text" id="username" name="username" placeholder="아이디를 입력하세요">
+            <input class="form-control h-100 my-3" type="password" id="password" name="password" placeholder="비밀번호를 입력하세요">
+            <div class="custom-control custom-checkbox mt-3">
 				<input type="checkbox" class="custom-control-input" name="idSave" value="N" id="idSave" />
 				<label class="custom-control-label" for="idSave">아이디 저장</label>
-			</div>
-		</form>
-		<p class="lead">
-			<a class="btn btn-primary btn-lg" href="#" role="button"
-				onclick="return chk_login()">로그인</a> <a
-				class="btn btn-success btn-lg"
-				href="<c:url value="/JoinMember.kjh"/>" role="button">회원가입</a>
-	</c:if>
-
-
+            </div>
+            <button class="btn btn-primary flex-shrink-0" type="button" onclick="return chk_login()">로그인</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <c:url value="/images/1.png" var="imageUrl" />
+    <div class="col-md-9 col-lg-6"> <img src="${imageUrl}" alt="Image" class="img-fluid mt-5 mt-md-0"> </div>
+  </div>
 </div>
+</div>
+</c:if>
+<c:if test="${not empty username}">
+<div class="jumbotron">
+<div class="container py-5" id="hometop">
+  <div class="row pt-5 mt-5 align-items-center justify-content-center justify-content-lg-between text-center text-lg-left flex-lg-row-reverse">
+    <div class="col-md-9 col-lg-6 col-xl-5 mb-4 mb-lg-0 pr-lg-5 pr-xl-0">
+      <div>
+        <h1 class="display-4">로그인 완료~~</h1>
+      </div>
+    </div>
+    <c:url value="/images/1.png" var="imageUrl" />
+    <div class="col-md-9 col-lg-6"> <img src="${imageUrl}" alt="Image" class="img-fluid mt-5 mt-md-0"> </div>
+  </div>
+</div>
+</div>
+</c:if>	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
 
 	function chk_login(){

@@ -45,6 +45,7 @@ public class LoginController extends HttpServlet {
 			
 			MemberDTO list = dao.selectOne(username);
 			req.setAttribute("list", list);
+			req.getSession().setAttribute("profile", list.getProfile());
 			
 			req.getRequestDispatcher("/WEB-INF/Member/Member_MyPage.jsp").forward(req, resp); 
 		}else {
