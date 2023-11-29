@@ -89,6 +89,7 @@ public class FileUtils {
 					String systemFileName=FileUtils.getNewFileName(saveDirectory, part.getSubmittedFileName());					
 					//파일 업로드
 					part.write(saveDirectory+File.separator+systemFileName);
+					System.out.println(saveDirectory+File.separator);
 					//파일명을 스프링버퍼에 저장
 					if(isDelete) {
 						StringBuffer deleteName=new StringBuffer();

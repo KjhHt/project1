@@ -1,6 +1,7 @@
 package controller.board;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,18 +51,11 @@ public class EditController extends HttpServlet{
 		if(fileParts.size()!=0 || !req.getParameter("updateFileList").isEmpty()) {
 			//파일만 추가하는 경우 ( 기존db데이타 + 업데이트db데이타 )
 			if(req.getParameter("updateFileList").isEmpty()) {
-				System.out.println("기존파일은 건들지않고 파일을 추가함");
-				StringBuffer filenames = FileUtils.upload(parts, saveDirectory, req);
-				System.out.println(filenames.toString());
-				filename += ","+filenames.toString();
+				filename = noOrginNewFile(parts,saveDirectory,req,filename);
 			}
 			//기존파일만 지우는 경우 ( 기존db수정만, )
 			else if(fileParts.size()==0) {
-				System.out.println("기존파일을 수정하고 파일은 추가하지 않음");
-				String[] updateFileList = req.getParameter("updateFileList").split(",");
-				for(String v : updateFileList) {
-					System.out.println(v);
-				}
+				filename = newUpdateOrginNoFile(req,saveDirectory);
 			}
 			//기존파일도 지우고 + 파일추가 하는경우 ( 기존db수정 및 + 업데이트db데이타 )
 			else {
@@ -77,5 +71,41 @@ public class EditController extends HttpServlet{
 		}
 		resp.sendRedirect(req.getContextPath()+"/Board/View.kjh?no="+no);
 	}
+
+
+	//기존파일은 건들지않고 파일을 추가함
+	private String noOrginNewFile(Collection<Part> parts, String saveDirectory, HttpServletRequest req, String orgin) {
+		String filename = orgin;
+		System.out.println("기존파일은 건들지않고 파일을 추가함");
+		StringBuffer filenames = FileUtils.upload(parts, saveDirectory, req);
+		System.out.println(filenames.toString());
+		filename += ","+filenames.toString();
+		return filename;
+	}
+	//기존파일을 수정하고 파일은 추가하지 않음
+	private String newUpdateOrginNoFile(HttpServletRequest req, String saveDirectory) {
+		System.out.println("기존파일을 수정하고 파일은 추가하지 않음");
+		String filename;
+		String[] updateFileList = req.getParameter("updateFileList").split(",");
+		String[] orginFileList = req.getParameter("orginFileList").split(",");
+		StringBuffer temp = new StringBuffer();
+		for(String upValue : updateFileList) {
+			for(String orValue : orginFileList) {
+				if(upValue.equals(orValue)) {
+					temp.append(upValue+",");
+					System.out.println("안돌아??");
+				}
+			}
+		}
+		FileUtils.deletes(temp, saveDirectory, ",");
+		filename = Arrays.stream(orginFileList)
+                .filter(value -> !Arrays.asList(updateFileList).contains(value))
+                .collect(Collectors.joining(", "));
+		//내일 filename이 1개도없을때 어떻게 가는지 확인하고 X값넣어라
+		return filename;
+	}
+	
+	
+	
 	
 }
