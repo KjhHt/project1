@@ -31,6 +31,7 @@ public class InsertController extends HttpServlet {
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
 		String username = (String) req.getSession().getAttribute("username");		
+		//파일
 		String saveDirectory = getServletContext().getRealPath("/upload");
 		String filename;
 		Collection<Part> parts = req.getParts();

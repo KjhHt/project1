@@ -93,7 +93,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				psmt.setString(1, params[0]);
 				psmt.executeUpdate();
 			}
-			String sql = "SELECT b.*,name "
+			String sql = "SELECT b.*,name,profile "
 					+ "FROM board b JOIN member m ON b.username=m.username "
 					+ "WHERE no=?";
 			psmt = conn.prepareStatement(sql);
@@ -109,6 +109,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				dto.setPostdate(rs.getDate(6));
 				dto.setAttachFile(rs.getString(7));
 				dto.setName(rs.getString(8));
+				dto.setProfile(rs.getString(9));
 			}
 		}
 		catch(SQLException e) {e.printStackTrace();}
@@ -155,12 +156,13 @@ public class BoardDAO implements DaoService<BoardDTO>{
 	@Override
 	public int update(BoardDTO dto) {
 		int affected = 0;
-		String sql = "UPDATE board SET title=?,content=? WHERE no=?";
+		String sql = "UPDATE board SET title=?,content=?,attachfile=? WHERE no=?";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getTitle());
 			psmt.setString(2, dto.getContent());
-			psmt.setString(3, dto.getNo());
+			psmt.setString(3, dto.getAttachFile());
+			psmt.setString(4, dto.getNo());
 			affected = psmt.executeUpdate();
 		}
 		catch(SQLException e) {e.printStackTrace();}

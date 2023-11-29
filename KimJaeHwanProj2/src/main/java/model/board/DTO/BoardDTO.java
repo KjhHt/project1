@@ -14,6 +14,7 @@ public class BoardDTO {
 	private String likecount;
 	private String attachFile;
 	private String commentCount;
+	private String profile;
 	
 	public BoardDTO() {}
 	
@@ -84,6 +85,14 @@ public class BoardDTO {
 
 	public void setCommentCount(String commentCount) {
 		this.commentCount = commentCount;
+	}
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
 	
 	

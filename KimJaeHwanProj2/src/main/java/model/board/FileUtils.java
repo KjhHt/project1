@@ -75,6 +75,7 @@ public class FileUtils {
 		//업로드된 파일명들 저장용
 		StringBuffer fileNames=new StringBuffer();
 		String deleteFileList = req.getParameter("deleteFileList");
+		//String isEdit = req.getParameter("isEdit");
 		String[] fileList = deleteFileList.split(",");
 		try {			
 			for(Part part:parts) {
@@ -97,6 +98,53 @@ public class FileUtils {
 					else {
 						fileNames.append(systemFileName+",");//구분자 ,	
 					}
+					
+				}				
+			}
+		}
+		catch(Exception e) {//에러시:null반환
+			return null;
+		}
+		if(fileNames.length() == 0) 
+			return null;
+		else 
+			return fileNames.deleteCharAt(fileNames.length()-1);
+
+	}
+	/**
+	 * 업데이트 로직을 만들자
+	 * 
+	 * 기존,추가,삭제,db수정
+	 */
+	//업로드 로직
+	public static StringBuffer fileUdateUpload(Collection<Part> parts,String saveDirectory,HttpServletRequest req) {
+		//업로드된 파일명들 저장용
+		StringBuffer fileNames=new StringBuffer();
+		String deleteFileList = req.getParameter("deleteFileList");
+		//String isEdit = req.getParameter("isEdit");
+		String[] fileList = deleteFileList.split(",");
+		try {			
+			for(Part part:parts) {
+				boolean isDelete = false;
+				if(part.getContentType() !=null) {//input type="file"인 경우	
+					for (String fileName : fileList) {
+					    if (part.getSubmittedFileName().equals(fileName.trim())) {
+					        isDelete = true;
+					    }
+					}
+					String systemFileName=FileUtils.getNewFileName(saveDirectory, part.getSubmittedFileName());					
+					//파일 업로드
+					part.write(saveDirectory+File.separator+systemFileName);
+					//파일명을 스프링버퍼에 저장
+					if(isDelete) {
+						StringBuffer deleteName=new StringBuffer();
+						deleteName.append(systemFileName+",");
+						FileUtils.deletes(deleteName,saveDirectory,",");
+					}
+					else {
+						fileNames.append(systemFileName+",");//구분자 ,	
+					}
+					
 				}				
 			}
 		}

@@ -46,8 +46,17 @@
 
 	<table class="table table-hover" >
 		<thead>
+		<colgroup>
+			<col style="width:138px">
+			<col>
+			<col style="width:168px">
+			<col style="width:130px">
+			<col style="width:118px">
+			<col style="width:118px">
+		</colgroup>
 			<tr style="text-align: center">
-				<th scope="col" colspan="2">제목</th>
+				<th scope="col">제목</th>
+				<th scope="col">제목</th>
 				<th scope="col">작성자</th>
 				<th scope="col">작성일</th>
 				<th scope="col">조회</th>
@@ -83,7 +92,7 @@
 <form method="get">
 	<c:set var="nowPage" value="${param.nowPage==null?1:param.nowPage}"/>
 	<input type="hidden" name="nowPage" value="${nowPage}"/>
-	<div style="display: flex; align-items: center;">
+	<div style="display: flex; align-items: center; justify-content: center;">
 	    <select class="pl" name="postDate" style="width:142px; height:35px; line-height:35px; padding:0px 13px; margin-right:3px;">
 	        <option value="">전체기간</option>
 	        <option value="day" ${param.postDate eq 'day' ? 'selected':''}>1일</option>
@@ -97,8 +106,8 @@
 	        <option value="title" ${param.searchColumn eq 'title' ? 'selected':''}>제목만</option>
 	        <option value="name" ${param.searchColumn eq 'name' ? 'selected':''}>글작성자</option>
 	    </select>
-	    <div  style="width: 256px; margin-left: 10px; display: flex; align-items: center;">
-	        <input type="text" name="searchWord" value="${param.searchWord }" class="form-control" placeholder="검색어를 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+	    <div  style="width: 476px; margin-left: 10px; display: flex; align-items: center;">
+	        <input style="width:400px;" type="text" name="searchWord" value="${param.searchWord }" class="form-control" placeholder="검색어를 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
 	        <button style="width:76px; height:36px; padding:0px;" class="btn btn-success" type="submit" id="button-addon2">검색</button>
 	    </div>
 	</div>

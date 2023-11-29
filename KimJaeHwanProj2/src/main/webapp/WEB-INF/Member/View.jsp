@@ -22,58 +22,71 @@
 	    box-sizing: border-box;
 	    background: var(--skinCommentWriterBg);
 	}
+	
+  .profile-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .user-info {
+    margin-left: 10px;
+    color: black;
+    font-size: 15px;
+  }
+
+  .comment-info {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    color: black;
+    font-size: 12px;
+    margin-left: auto;
+  }
+
 </style>
-<div class="jumbotron">
-	<legend>상세보기</legend>
-
-<fieldset>
-	<c:if test="${record.attachFile ne 'X'}">
-		<figure class="text-end">
-			<blockquote class="blockquote" style="text-align: right;">
-				<a href="javascript:void(0)" role="button" class="button_file"
-					onclick="toggleFileList()">첨부파일 모아보기(${fileCount})</a><br>
-				<div class="file-list" style="display: none;">
-					<c:forEach var="file" items="${fn:split(record.attachFile,',') }">
-						${file}<a href="<c:url value="/Board/Download.kjh?filename=${file}&no=${record.no}"/>" />다운로드</a>
-						<br />
-					</c:forEach>
-				</div>
-			</blockquote>
-		</figure>
-	</c:if>
-
-
-	<div class="form-group">
-		<label for="exampleInputEmail1">제목</label> <input type="text"
-			class="form-control" id="title" value="${record.title }" disabled="">
-	</div>
-	<div class="form-group">
-		<label for="exampleInputEmail1">이름</label> <input type="text"
-			class="form-control" id="name" value="${record.name }" disabled="">
-	</div>
-	<div class="form-group">
-		<label for="exampleInputEmail1">등록일</label> <input type="text"
-			class="form-control" id="" value="${record.postdate}" disabled="">
-	</div>
-	<div class="form-group">
-		<label for="exampleInputEmail1">조회수</label> <input type="text"
-			class="form-control" id="" value="${record.visitcount}" disabled="">
-	</div>
-	<div class="form-group">
-		<label for="exampleInputEmail1">댓글수</label> <input type="text"
-			class="form-control" id="" value="${commentCount}" placeholder="댓글하면"
-			disabled="">
-	</div>
-
-	<div class="form-group">
-		<label for="exampleTextarea">내용</label>
-		<textarea class="form-control" id="content" rows="3" disabled="">${record.content }</textarea>
-	</div>
-
-	<c:url value="/images/chat-dots.svg" var="imageUrlChat" />
 	<c:url value="/images/heart.svg" var="imageUrlHeart" />
 	<c:url value="/images/heart-fill.svg" var="imageUrlHeartFill" />
-	<div class="jumbotron" style="background-color: white;">
+<div class="jumbotron" style="background-color: white;">
+<div class="container mt-3">
+	<h1 style="color:green;">'한국 ICT 1기'</h1>
+
+	<h2>${record.title }</h2>
+		<div class="profile-container">
+		  <c:url value="/images/${record.profile }.png" var="imageUrl" />
+		  <img class="img-profile rounded-circle" style="width:40px;" id="img" src="${imageUrl}">
+		  <div class="user-info">
+		    <span>${record.name}</span>
+		    <br/>
+		    <span>${record.postdate} 조회${record.visitcount}</span>
+		  </div>
+		  <div class="comment-info">
+		<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
+		  <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+		  <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2"/>
+		</svg>
+		    <span style="font-size:15px">&nbsp;댓글${commentCount}</span>
+		  </div>
+		</div>
+	<hr/>
+	<div class="form-group">
+		<div>
+			<c:if test="${record.attachFile ne 'X'}">
+				<figure class="text-end">
+					<blockquote class="blockquote" style="text-align: right;">
+						<a href="javascript:void(0)" role="button" class="button_file"
+							onclick="toggleFileList()">첨부파일 모아보기(${fileCount})</a><br>
+						<div class="file-list" style="display: none;">
+							<c:forEach var="file" items="${fn:split(record.attachFile,',') }">
+								${file}<a href="<c:url value="/Board/Download.kjh?filename=${file}&no=${record.no}"/>" />다운로드</a>
+								<br />
+							</c:forEach>
+						</div>
+					</blockquote>
+				</figure>
+			</c:if>
+			${record.content }
+		</div>
+	</div>
 		<div id="likeAndCommentCount">
 			<c:if test="${isLike==0}">
 				<img id="heart" src="${imageUrlHeart}" alt="좋아요" />
@@ -81,15 +94,17 @@
 			<c:if test="${isLike==1}">
 				<img id="heart" src="${imageUrlHeartFill}" alt="좋아요" />
 			</c:if>
-			<span>좋아요</span> <span id="likeNum">${likeRecord}</span> <img
-				id="chat" src="${imageUrlChat}" alt="채팅" /> <span>댓글
+			<span>좋아요</span> <span id="likeNum">${likeRecord}</span>
+			
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
+  <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+  <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2"/>
+</svg>
+			
+			<span>댓글
 				${commentCount}</span>
 		</div>
-
-
 		<hr />
-		<div class="container mt-3">
-
 				<div class="comment_inbox" id="buttonNode">
 					<strong class="d-block mb-2" style="font-size: 17px">댓글</strong>
 					<c:if test="${commentCount ne 0}">
@@ -136,20 +151,17 @@
 					</div>
 				</form>
 				</div>
-			</div>
-
-		</div>
-	</div>
-	</div>
-
+	<div>
 	<a class="btn btn-primary btn-lg"
 		href="<c:url value="/Board/Insert.kjh"/>" role="button">글쓰기</a> <a
 		class="btn btn-primary btn-lg"
 		href="<c:url value="/Board/Edit.kjh?no=${param.no}"/>" role="button">수정</a>
 	<a class="btn btn-danger btn-lg" id="deleteButton" role="button">삭제</a>
-	<a class="btn btn-primary btn-lg"
+	<a class="btn btn-primary btn-lg" style="float: right;"
 		href="<c:url value="/Board/List.kjh"/>" role="button">목록</a>
-</fieldset>
+			</div>
+			</div>
+		</div>
 
 
 

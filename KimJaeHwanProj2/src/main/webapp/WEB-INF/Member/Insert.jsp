@@ -13,31 +13,33 @@
             color: #fff;
             cursor: pointer;
         }
+        
+        
     </style>
 <div class="jumbotron">
-
 	<form action="<c:url value="/Board/Insert.kjh"/>" method="post" enctype="multipart/form-data">
 	  <fieldset>
-	    <legend>입력</legend>
-	<div style="text-align:right;">
-      <input type="file" id="fileInput" name="file" multiple>
-    <button type="button" id="customFileBtn">파일 추가</button>
-        <ul class="list-unstyled" id="fileList"></ul>
+<div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    <span style="text-align: left; font-size:30px">게시판 글쓰기</span>
+    <div style="display: flex; gap: 10px;">
+        <input type="file" id="fileInput" name="file" multiple>
+        <button type="button" id="customFileBtn">파일 추가</button>
     </div>
+</div>
+<ul style="text-align:right;" class="list-unstyled" id="fileList"></ul>
+    <hr>
 	    <div class="form-group">
-	      <label for="exampleInputEmail1">제목</label>
-	      <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요">
+	      <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해 주세요">
 	    </div>
-
 	    <div class="form-group">
-	      <label for="exampleTextarea">내용</label>
-	      <textarea class="form-control" id="content" name="content" rows="5"></textarea>
+	      <textarea class="form-control" id="content" name="content" rows="20" placeholder="내용을 입력하세요"></textarea>
 	    </div>
+	    <div style="display: flex; justify-content: flex-end;">
 	    <button type="submit" class="btn btn-primary">등록</button>
+	    </div>
 	  </fieldset>
 	  <input type="hidden" id="deleteFileList" name="deleteFileList" value=""/>
 	</form>
-  	
 </div>
 
 
