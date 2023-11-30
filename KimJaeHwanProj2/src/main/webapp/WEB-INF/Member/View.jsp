@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/template/HeadNav.jsp"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 <style>
 	.file-list {
 		display: none;
@@ -43,50 +44,52 @@
     margin-left: auto;
   }
 
+
 </style>
 	<c:url value="/images/heart.svg" var="imageUrlHeart" />
 	<c:url value="/images/heart-fill.svg" var="imageUrlHeartFill" />
+	<c:url value="/images/pencil-square.svg" var="pencilSquare" />
 <div class="jumbotron" style="background-color: white;">
-<div class="container mt-3">
-	<h1 style="color:green;">'한국 ICT 1기'</h1>
-
-	<h2>${record.title }</h2>
+	<div class="container mt-3">
+		<h1 style="color: green;">'한국 ICT 1기'</h1>
+		<h2>${record.title }</h2>
 		<div class="profile-container">
-		  <c:url value="/images/${record.profile }.png" var="imageUrl" />
-		  <img class="img-profile rounded-circle" style="width:40px;" id="img" src="${imageUrl}">
-		  <div class="user-info">
-		    <span>${record.name}</span>
-		    <br/>
-		    <span>${record.postdate} 조회${record.visitcount}</span>
-		  </div>
-		  <div class="comment-info">
-		<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
-		  <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
-		  <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2"/>
-		</svg>
-		    <span style="font-size:15px">&nbsp;댓글${commentCount}</span>
-		  </div>
+			<c:url value="/images/${record.profile }.png" var="imageUrl" />
+			<img class="img-profile rounded-circle" style="width: 40px;" id="img"
+				src="${imageUrl}">
+			<div class="user-info">
+				<span>${record.name}</span> <br /> <span>${record.postdate}
+					조회${record.visitcount}</span>
+			</div>
+			<div class="comment-info">
+				<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
+				  <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+				  <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2" />
+				</svg>
+				<span style="font-size: 15px">&nbsp;댓글${commentCount}</span>
+			</div>
 		</div>
-	<hr/>
-	<div class="form-group">
-		<div>
-			<c:if test="${record.attachFile ne 'X'}">
-				<figure class="text-end">
-					<blockquote class="blockquote" style="text-align: right;">
-						<a href="javascript:void(0)" role="button" class="button_file"
-							onclick="toggleFileList()">첨부파일 모아보기(${fileCount})</a><br>
-						<div class="file-list" style="display: none;">
-							<c:forEach var="file" items="${fn:split(record.attachFile,',') }">
-								${file}<a href="<c:url value="/Board/Download.kjh?filename=${file}&no=${record.no}"/>" />다운로드</a>
-								<br />
-							</c:forEach>
-						</div>
-					</blockquote>
-				</figure>
-			</c:if>
-			${record.content }
+		<hr />
+		<div class="form-group">
+			<div>
+				<c:if test="${record.attachFile ne 'X'}">
+					<figure class="text-end">
+						<blockquote class="blockquote" style="text-align: right;">
+							<a href="javascript:void(0)" role="button" class="button_file"
+								onclick="toggleFileList()">첨부파일 모아보기(${fileCount})</a><br>
+							<div class="file-list" style="display: none;">
+								<c:forEach var="file" items="${fn:split(record.attachFile,',') }">
+									${file}
+									<a href="<c:url value="/Board/Download.kjh?filename=${file}&no=${record.no}"/>" />다운로드</a>
+									<br />
+								</c:forEach>
+							</div>
+						</blockquote>
+					</figure>
+				</c:if>
+				${record.content }
+			</div>
 		</div>
-	</div>
 		<div id="likeAndCommentCount">
 			<c:if test="${isLike==0}">
 				<img id="heart" src="${imageUrlHeart}" alt="좋아요" />
@@ -95,76 +98,117 @@
 				<img id="heart" src="${imageUrlHeartFill}" alt="좋아요" />
 			</c:if>
 			<span>좋아요</span> <span id="likeNum">${likeRecord}</span>
-			
-<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
-  <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
-  <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2"/>
-</svg>
-			
-			<span>댓글
-				${commentCount}</span>
+
+			<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
+			  <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+			  <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2" />
+			</svg>
+
+			<span>댓글 ${commentCount}</span>
 		</div>
 		<hr />
-				<div class="comment_inbox" id="buttonNode">
-					<strong class="d-block mb-2" style="font-size: 17px">댓글</strong>
-					<c:if test="${commentCount ne 0}">
-						<c:forEach var="c" items="${resultList}">
-							<c:set var="formattedDate" value="${commentDTO.commentdate.time}" />
-							<fmt:formatDate value="${c.commentdate}"
-								pattern="yy/MM/dd HH:mm:ss" var="formattedCommentdate" />
-							<hr>
-							<c:if test="${c.replaywhether eq 'Y'}">
-								<div style="padding-left: 50px;" id='isComment'
-									data-subcomment='${c.subcomment}'>
-							</c:if>
-							<c:if test="${c.replaywhether eq 'F'}">
-								<div>
-							</c:if>
-							<div>${c.name}</div>
+		<div class="comment_inbox" id="buttonNode">
+			<strong class="d-block mb-2" style="font-size: 17px">댓글</strong>
+				<c:forEach var="c" items="${resultList}">
+					<c:set var="formattedDate" value="${commentDTO.commentdate.time}" />
+					<fmt:formatDate value="${c.commentdate}"
+						pattern="yy/MM/dd HH:mm:ss" var="formattedCommentdate" />
+					<%-- 답글에 답글 --%>
+					<c:if test="${c.replaywhether eq 'Y' and c.isdelete eq 'N' }">
+					<hr>
+						<div style="padding-left: 50px;" id='isComment' data-subcomment='${c.subcomment}' data-cno='${c.cno}'>
+							<div style="display: flex; justify-content: space-between; align-items: center;">
+								<div>${c.name}</div>
+								<div style="margin-right: 20px;">
+									<a id="updateComment" href="javascript:void(0);" style="color: black; margin-right: 5px;">
+										<img id="commentEdit" src="${pencilSquare}" alt="업데이트" />
+									</a>
+									<a id="deleteComment" href="javascript:void(0);" style="color: black;">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+										  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+										  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+										</svg>
+									</a>
+								</div>
+							</div>							
 							<div>
 								<c:if test="${c.subname ne 'X'}">
 									<span style="color: blue;"><b>${c.subname}</b></span>
 								</c:if>
-								${c.commentcontent}
+								<span>${c.commentcontent}</span>
 							</div>
 							<span style="color: #979797;"> ${formattedCommentdate} <a
 								href="#" id="replaySub" data-cno="${c.cno}"
 								style="color: #979797; font-size: .875rem">&nbsp;&nbsp;답글쓰기</a>
-							</span>
-				</div>
-				<hr>
-				</c:forEach>
-				</c:if>
-				<div class="CommentWriter">
-				<br /> 
-				${name }
-				<form id="commentForm"
-					action="<c:url value="/Board/CommentInsert.kjh"/>" method="post">
-					<textarea placeholder="댓글을 남겨보세요" rows="1" name="commentcontent"
-						class="form-control"></textarea>
-					<input type="hidden" name="no" value="${param.no }" />
-					<div class="comment_attach mt-2 d-flex align-items-center">
-						<div class="register_box ml-auto">
-							<a href="#" role="button" class="btn btn-primary"
-								onclick="submitCommentForm()">등록</a>
+							</span>							
 						</div>
+						<hr>
+					</c:if>
+					<%--첫번째 답글 --%>
+					<c:if test="${c.replaywhether eq 'F' and c.isdelete eq 'N'}">
+						<hr>
+						<div id='isComment' data-cno='${c.cno}' >
+							<div style="display: flex; justify-content: space-between; align-items: center;">
+								<div>${c.name}</div>
+								<div style="margin-right: 20px;">
+									<a id="updateComment" href="javascript:void(0);" style="color: black; margin-right: 5px;">
+										<img id="commentEdit" src="${pencilSquare}" alt="업데이트" />
+									</a>
+									<a id="deleteComment" href="javascript:void(0);" style="color: black;">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+										  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+										  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+										</svg>
+									</a>
+								</div>
+							</div>						
+							<div>
+								<c:if test="${c.subname ne 'X'}">
+									<span style="color: blue;"><b>${c.subname}</b></span>
+								</c:if>
+								<span>${c.commentcontent}</span>
+							</div>
+							<span style="color: #979797;"> ${formattedCommentdate} <a
+								href="#" id="replaySub" data-cno="${c.cno}"
+								style="color: #979797; font-size: .875rem">&nbsp;&nbsp;답글쓰기</a>
+							</span>								
+						</div>
+						<hr>
+					</c:if>
+					<c:if test="${c.replaywhether eq 'F' and c.isdelete eq 'Y'}">
+						<hr>
+							<div>삭제된 댓글입니다.</div>
+						<hr>
+					</c:if>
+				</c:forEach>
+			<%-- 삭제된 답글 --%>
+
+		<div class="CommentWriter">
+			<br /> ${name }
+			<form id="commentForm"
+				action="<c:url value="/Board/CommentInsert.kjh"/>" method="post">
+				<textarea placeholder="댓글을 남겨보세요" rows="1" name="commentcontent"
+					class="form-control"></textarea>
+				<input type="hidden" name="no" value="${param.no }" />
+				<div class="comment_attach mt-2 d-flex align-items-center">
+					<div class="register_box ml-auto">
+						<a href="#" role="button" class="btn btn-primary"
+							onclick="submitCommentForm()">등록</a>
 					</div>
-				</form>
 				</div>
-	<div>
-	<a class="btn btn-primary btn-lg"
-		href="<c:url value="/Board/Insert.kjh"/>" role="button">글쓰기</a> <a
-		class="btn btn-primary btn-lg"
-		href="<c:url value="/Board/Edit.kjh?no=${param.no}"/>" role="button">수정</a>
-	<a class="btn btn-danger btn-lg" id="deleteButton" role="button">삭제</a>
-	<a class="btn btn-primary btn-lg" style="float: right;"
-		href="<c:url value="/Board/List.kjh"/>" role="button">목록</a>
-			</div>
-			</div>
+			</form>
 		</div>
-
-
-
+		<div>
+			<a class="btn btn-primary btn-lg"
+				href="<c:url value="/Board/Insert.kjh"/>" role="button">글쓰기</a> <a
+				class="btn btn-primary btn-lg"
+				href="<c:url value="/Board/Edit.kjh?no=${param.no}"/>" role="button">수정</a>
+			<a class="btn btn-danger btn-lg" id="deleteButton" role="button">삭제</a>
+			<a class="btn btn-primary btn-lg" style="float: right;"
+				href="<c:url value="/Board/List.kjh"/>" role="button">목록</a>
+		</div>
+	</div>
+</div>
 </div>
 <script>
 
@@ -243,12 +287,26 @@ $('#heart').on('click',function(){
 
     var buttonNode = document.getElementById("buttonNode");
     var previousForm = null;
-
+	var commentUpdate = null;
+	var contentText = null; 
+	var updateCno = null;
     buttonNode.onclick = function (e) {
-
         if (e.target.tagName === "A" && e.target.id === 'replaySub') {
             e.preventDefault();
-
+            
+            var scrollPos = window.scrollY;
+            sessionStorage.setItem('scrollPos', scrollPos);
+            
+			var url;
+            if(commentUpdate==null){//입력
+            	url = "<c:url value='/Board/CommentSubInsert.kjh'/>";
+            	textValue = "";
+            }
+            else{//업데이트
+            	url = "<c:url value='/Board/CommentUpdate.kjh'/>";
+            	textValue = contentText;
+            }
+            
             if (previousForm !== null) {
                 previousForm.remove();
             }
@@ -258,7 +316,7 @@ $('#heart').on('click',function(){
             
             var newForm = document.createElement("form");
             newForm.id = "commentSubForm";
-            newForm.action = "<c:url value='/Board/CommentSubInsert.kjh'/>";
+            newForm.action = url;
             newForm.method = "post";
 
             var textDiv = document.createElement("div");
@@ -270,6 +328,7 @@ $('#heart').on('click',function(){
             textarea.rows = "1";
             textarea.name = "commentcontent";
             textarea.className = "form-control";
+            textarea.value = textValue;
             newForm.appendChild(textarea);
 
             var hiddenInputNo = document.createElement("input");
@@ -290,6 +349,15 @@ $('#heart').on('click',function(){
             hiddenInputCno.id = "commentCno"; 
             newForm.appendChild(hiddenInputCno);
             
+            if(updateCno!=null){
+                var hiddenUpdateCno = document.createElement("input");
+                hiddenUpdateCno.type = "hidden";
+                hiddenUpdateCno.name = "updateCno";
+                hiddenUpdateCno.id = "updateCno"; 
+                hiddenUpdateCno.value = updateCno; 
+                newForm.appendChild(hiddenUpdateCno);           	
+            }
+            
             var dataSubId = e.target.parentElement.parentElement.getAttribute('id');
             var parentDiv = e.target.parentElement.parentElement;
             var firstChildDiv = parentDiv.querySelector('div:first-child');
@@ -300,7 +368,7 @@ $('#heart').on('click',function(){
 	            hiddenInputCno.type = "hidden";
 	            hiddenInputCno.name = "subname";
 	            hiddenInputCno.id = "commentSubName"; 
-	            hiddenInputCno.value = textContent; 
+	            hiddenInputCno.value = updateCno; 
 	            newForm.appendChild(hiddenInputCno);
             }
 
@@ -343,6 +411,9 @@ $('#heart').on('click',function(){
 
             cancelButton.onclick = function () {
                 e.preventDefault();
+                commentUpdate=null;
+                contentText=null;
+                updateCno=null;
                 previousForm.remove();
             };
             
@@ -361,6 +432,64 @@ $('#heart').on('click',function(){
             fileList.style.display = 'none';
         }
     }
+    
+    var deleteComment = document.querySelectorAll('#isComment');
+    deleteComment.forEach(function(button) {
+        button.addEventListener('click', function(e) {
+			if(e.target.tagName==='svg' || e.target.tagName==='path'){
+				if(confirm("정말로 댓글을 삭제하시겠습니까?")){
+		        	e.preventDefault();
+		            var isCommentDiv = e.target.closest('[id="isComment"]');
+		            var dataCno = isCommentDiv.getAttribute('data-cno');
+		            fetch("<c:url value="/Board/deleteComment.kjh"/>",{
+		        		method:"POST",
+		                headers: {
+		                    "Content-Type": "application/json"
+		                },
+		                body: JSON.stringify({ dataCno:dataCno })
+		        	})
+		        	.then(response => response.json())
+		       		.then(data => {
+		            	if (data.success) {
+		                    // 응답이 성공적으로 왔을 때, 현재 스크롤 위치를 저장
+		                    var scrollPos = window.scrollY;
+		                    sessionStorage.setItem('scrollPos', scrollPos);
+		                    // 페이지를 다시 로드
+		                    location.reload();
+		            	}
+		       		})
+		            .catch(error => {
+		            	alert('오류 발생! 관리자에게 문의하세요');
+		                console.error("Error:", error);
+		            });
+	        	}
+				else{
+					//취소했으니까
+					return;
+				}
+			}
+			if(e.target.tagName==='IMG'){
+			    // 'IMG' 요소의 부모 노드인 <div>를 찾음
+			    var parentDiv = e.target.closest('#isComment');
+			    // 내용값 가져옴
+			    contentText = parentDiv.children[1].lastElementChild.textContent;
+			    commentUpdate = "update";
+			    updateCno = parentDiv.getAttribute('data-cno');
+			    parentDiv.children[2].lastElementChild.click();
+			}
+        });
+    });
+    
+    window.addEventListener('load', function() {
+        var scrollPos = sessionStorage.getItem('scrollPos');
+        if (scrollPos !== null) {
+            // 저장된 스크롤 위치로 이동
+            window.scrollTo(0, scrollPos);
+            // 저장된 스크롤 위치 정보는 이제 필요 없으므로 제거
+            sessionStorage.removeItem('scrollPos');
+        }
+    });
+    
 </script>
 
 

@@ -39,6 +39,9 @@ public class ViewController extends HttpServlet{
 		// 좋아요 누른여부? 1:누른적있음 0:누른적없음
 		int isLike = dao.isLike(no,username);
 		req.setAttribute("isLike", isLike);
+		//해당 게시글 댓글 수 가져오기
+		int commentCount = dao.commentCountOne(no);
+		req.setAttribute("commentCount", commentCount);
 		
 		//댓글 게시글 뿌려주기
 		List<CommentDTO> firstCommentList = dao.firstCommentList(no);
@@ -70,11 +73,9 @@ public class ViewController extends HttpServlet{
 		}
 		
 		if(secondCommentList.size()!=0) {
-			req.setAttribute("commentCount", resultList.size());
 			req.setAttribute("resultList", resultList);
 		}
 		else {
-			req.setAttribute("commentCount", firstCommentList.size());
 			req.setAttribute("resultList", firstCommentList);
 		}
 		dao.close();

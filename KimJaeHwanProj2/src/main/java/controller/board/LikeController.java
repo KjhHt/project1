@@ -44,7 +44,6 @@ public class LikeController extends HttpServlet {
     private void sendResult(HttpServletResponse resp, boolean result) throws IOException {
         // JSON 응답을 생성
         String jsonResponse = "{\"success\":" + result + "}";
-
         // JSON 형태의 응답을 클라이언트에 전송
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");

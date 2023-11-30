@@ -13,6 +13,7 @@ public class CommentDTO {
 	private String replaywhether;
 	private String subcomment;
 	private String subname;
+	private String isdelete;
 	
 	public CommentDTO() {}
 	
@@ -83,6 +84,14 @@ public class CommentDTO {
 
 	public void setSubname(String subname) {
 		this.subname = subname;
+	}
+
+	public String getIsdelete() {
+		return isdelete;
+	}
+
+	public void setIsdelete(String isdelete) {
+		this.isdelete = isdelete;
 	}
 	
 	

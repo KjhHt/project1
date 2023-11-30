@@ -24,8 +24,7 @@ public class CommentSubInsertController extends HttpServlet{
 		if(subname==null) {
 			subname="X";
 		}
-		
-		
+
 		BoardDAO dao = new BoardDAO(getServletContext());
 		CommentDTO dto = new CommentDTO();
 		dto.setCno(cno);

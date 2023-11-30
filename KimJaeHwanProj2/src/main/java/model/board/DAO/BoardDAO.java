@@ -51,7 +51,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				+ "		FROM ("
 				+ "		  SELECT B.*,name,RANK() OVER (ORDER BY no DESC) AS no_rank ,"
 				+ "       (SELECT COUNT(*) FROM likes WHERE no = B.no) AS likecount ,"
-				+ "		  (SELECT COUNT(*) FROM commenttable WHERE no = B.no) AS commentcount "
+				+ "		  (SELECT COUNT(*) FROM commenttable WHERE no = B.no AND isdelete='N') AS commentcount "
 				+ "		  FROM board B JOIN member M ON b.username = m.username WHERE 1=1";
 		if(map.get("dateRange") != null) {
 			sql += " AND "+map.get("dateRange") + " >= " + map.get("dateRangeResult") ;
@@ -199,6 +199,22 @@ public class BoardDAO implements DaoService<BoardDTO>{
 		return totalCount;
 	}
 
+	
+	public int commentCountOne(String no) {
+		int count = 0;
+		String sql = "SELECT COUNT(*) FROM commenttable WHERE no = ? AND isdelete='N'";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1,no);	
+			rs = psmt.executeQuery();
+			rs.next();
+			count = rs.getInt(1);
+		}
+		catch(SQLException e) {e.printStackTrace();}
+		
+		return count;
+	}
+	
 	public List<CommentDTO> firstCommentList(String no) {
 		List<CommentDTO> flist = new Vector<>();
 		String sql = " SELECT c.*,name "
@@ -220,7 +236,8 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				dto.setReplaywhether(rs.getString(6));
 				dto.setSubcomment(rs.getString(7));
 				dto.setSubname(rs.getString(8));
-				dto.setName(rs.getString(9));
+				dto.setIsdelete(rs.getString(9));
+				dto.setName(rs.getString(10));
 				flist.add(dto);
 			}			
 		}
@@ -248,7 +265,8 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				dto.setReplaywhether(rs.getString(6));
 				dto.setSubcomment(rs.getString(7));
 				dto.setSubname(rs.getString(8));
-				dto.setName(rs.getString(9));
+				dto.setIsdelete(rs.getString(9));
+				dto.setName(rs.getString(10));
 				slist.add(dto);
 			}			
 		}
@@ -279,7 +297,8 @@ public class BoardDAO implements DaoService<BoardDTO>{
 		            dto.setReplaywhether(rs.getString(6));
 		            dto.setSubcomment(rs.getString(7));
 					dto.setSubname(rs.getString(8));
-					dto.setName(rs.getString(9));
+					dto.setIsdelete(rs.getString(9));
+					dto.setName(rs.getString(10));
 		            resultList.add(dto);
 		        }
 		    } 
@@ -291,7 +310,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 
 	public int insertComment(CommentDTO dto) {
 		int affected=0;
-		String sql="INSERT INTO commenttable VALUES(SEQ_comment.NEXTVAL,?,?,?,DEFAULT,DEFAULT,0,DEFAULT)";
+		String sql="INSERT INTO commenttable VALUES(SEQ_comment.NEXTVAL,?,?,?,DEFAULT,DEFAULT,0,DEFAULT,DEFAULT)";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getNo());
@@ -305,7 +324,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 
 	public int insertSubComment(CommentDTO dto) {
 		int affected=0;
-		String sql="INSERT INTO commenttable VALUES(SEQ_comment.NEXTVAL,?,?,?,DEFAULT,?,?,?)";
+		String sql="INSERT INTO commenttable VALUES(SEQ_comment.NEXTVAL,?,?,?,DEFAULT,?,?,?,DEFAULT)";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getNo());
@@ -313,12 +332,42 @@ public class BoardDAO implements DaoService<BoardDTO>{
 			psmt.setString(3, dto.getCommentcontent());	
 			psmt.setString(4, dto.getReplaywhether());	
 			psmt.setString(5, dto.getCno());	
-			psmt.setString(6, dto.getSubname());	
+			psmt.setString(6, dto.getSubname().trim());	
 			affected=psmt.executeUpdate();
 		}
 		catch(SQLException e) {e.printStackTrace();}		
 		return affected;
 	}
+	
+	
+	public int commentDelete(String cno) {
+		int affected=0;
+		String sql="UPDATE commenttable SET isdelete='Y' WHERE cno=?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, cno);
+			affected = psmt.executeUpdate();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}	
+		return affected;
+	}	
+	
+	public int updateComment(String updateCno, String content) {
+		int affected=0;
+		String sql="UPDATE commenttable SET commentcontent=? WHERE cno=?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, content);
+			psmt.setString(2, updateCno);
+			affected = psmt.executeUpdate();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}	
+		return affected;
+	}	
 
 	public boolean likeCountUp(String no, String username) {
 		boolean affected=false;
@@ -369,5 +418,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 		catch(SQLException e) {e.printStackTrace();}
 		return totalCount;
 	}
+
+
 
 }
