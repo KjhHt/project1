@@ -217,7 +217,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 	
 	public List<CommentDTO> firstCommentList(String no) {
 		List<CommentDTO> flist = new Vector<>();
-		String sql = " SELECT c.*,name "
+		String sql = " SELECT c.*,name,profile "
 				   + " FROM member m JOIN commenttable c ON m.username = c.username "
 				   + " WHERE no = ? "
 				   + " AND replaywhether = 'F' "
@@ -238,6 +238,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				dto.setSubname(rs.getString(8));
 				dto.setIsdelete(rs.getString(9));
 				dto.setName(rs.getString(10));
+				dto.setProfile(rs.getString(11));
 				flist.add(dto);
 			}			
 		}
@@ -247,7 +248,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 
 	public List<CommentDTO> secondCommentList(String no) {
 		List<CommentDTO> slist = new Vector<>();
-		String sql = " SELECT c.*,name "
+		String sql = " SELECT c.*,name,profile "
 				   + " FROM member m JOIN commenttable c ON m.username = c.username "
 				   + " WHERE no = ? "
 				   + " AND replaywhether = 'Y' ";	
@@ -267,6 +268,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				dto.setSubname(rs.getString(8));
 				dto.setIsdelete(rs.getString(9));
 				dto.setName(rs.getString(10));
+				dto.setProfile(rs.getString(11));
 				slist.add(dto);
 			}			
 		}
@@ -276,7 +278,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 
 	public List<CommentDTO> commentCnoEqualSub(String cno) {
 	    List<CommentDTO> resultList = new ArrayList<>();
-	    String sql = "SELECT b.*, name " +
+	    String sql = "SELECT b.*, name,profile " +
 	                 "FROM COMMENTTABLE a " +
 	                 "JOIN COMMENTTABLE b ON a.cno = b.subcomment " +
 	                 "JOIN member m ON m.username = b.username " +
@@ -299,6 +301,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 					dto.setSubname(rs.getString(8));
 					dto.setIsdelete(rs.getString(9));
 					dto.setName(rs.getString(10));
+					dto.setProfile(rs.getString(11));
 		            resultList.add(dto);
 		        }
 		    } 

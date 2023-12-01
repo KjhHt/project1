@@ -44,6 +44,9 @@
     margin-left: auto;
   }
 
+  #isComment {
+  	background : rgb(250,250,250);
+  }
 
 </style>
 	<c:url value="/images/heart.svg" var="imageUrlHeart" />
@@ -58,8 +61,11 @@
 			<img class="img-profile rounded-circle" style="width: 40px;" id="img"
 				src="${imageUrl}">
 			<div class="user-info">
-				<span>${record.name}</span> <br /> <span>${record.postdate}
-					조회${record.visitcount}</span>
+				<span>${record.name}</span> <br /> 
+				<fmt:formatDate value="${record.postdate}" pattern="yy/MM/dd HH:mm:ss" var="formattedpostdate" />
+				<span>
+				${formattedpostdate}
+				조회${record.visitcount}</span>
 			</div>
 			<div class="comment-info">
 				<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
@@ -110,13 +116,20 @@
 		<div class="comment_inbox" id="buttonNode">
 			<strong class="d-block mb-2" style="font-size: 17px">댓글</strong>
 				<c:forEach var="c" items="${resultList}">
+				
+					<c:url value="/images/${c.profile }.png" var="imageUrlc" />
+					
 					<c:set var="formattedDate" value="${commentDTO.commentdate.time}" />
 					<fmt:formatDate value="${c.commentdate}"
 						pattern="yy/MM/dd HH:mm:ss" var="formattedCommentdate" />
 					<%-- 답글에 답글 --%>
 					<c:if test="${c.replaywhether eq 'Y' and c.isdelete eq 'N' }">
 					<hr>
-						<div style="padding-left: 50px;" id='isComment' data-subcomment='${c.subcomment}' data-cno='${c.cno}'>
+					<div style="display: flex; align-items: center;">
+						<div >
+							<img class="img-profile rounded-circle" style="margin-left:50px; width: 40px;" id="img" src="${imageUrlc}">
+						</div>
+						<div style="padding-left:10px; flex-grow: 1;" id='isComment' data-subcomment='${c.subcomment}' data-cno='${c.cno}'>
 							<div style="display: flex; justify-content: space-between; align-items: center;">
 								<div>${c.name}</div>
 								<div style="margin-right: 20px;">
@@ -142,36 +155,42 @@
 								style="color: #979797; font-size: .875rem">&nbsp;&nbsp;답글쓰기</a>
 							</span>							
 						</div>
+					</div>
 						<hr>
 					</c:if>
 					<%--첫번째 답글 --%>
 					<c:if test="${c.replaywhether eq 'F' and c.isdelete eq 'N'}">
 						<hr>
-						<div id='isComment' data-cno='${c.cno}' >
-							<div style="display: flex; justify-content: space-between; align-items: center;">
-								<div>${c.name}</div>
-								<div style="margin-right: 20px;">
-									<a id="updateComment" href="javascript:void(0);" style="color: black; margin-right: 5px;">
-										<img id="commentEdit" src="${pencilSquare}" alt="업데이트" />
-									</a>
-									<a id="deleteComment" href="javascript:void(0);" style="color: black;">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-										  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-										  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-										</svg>
-									</a>
+						<div style="display: flex; align-items: center;">
+						<div>
+							<img class="img-profile rounded-circle" style="width: 40px;" id="img" src="${imageUrlc}">
+						</div>
+							<div id='isComment' data-cno='${c.cno}' style="flex-grow: 1; margin-left: 10px;" >
+								<div style="display: flex; justify-content: space-between; align-items: center;">
+									<div>${c.name}</div>
+									<div style="margin-right: 20px;">
+										<a id="updateComment" href="javascript:void(0);" style="color: black; margin-right: 5px;">
+											<img id="commentEdit" src="${pencilSquare}" alt="업데이트" />
+										</a>
+										<a id="deleteComment" href="javascript:void(0);" style="color: black;">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+											  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+											  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+											</svg>
+										</a>
+									</div>
+								</div>						
+								<div>
+									<c:if test="${c.subname ne 'X'}">
+										<span style="color: blue;"><b>${c.subname}</b></span>
+									</c:if>
+									<span>${c.commentcontent}</span>
 								</div>
-							</div>						
-							<div>
-								<c:if test="${c.subname ne 'X'}">
-									<span style="color: blue;"><b>${c.subname}</b></span>
-								</c:if>
-								<span>${c.commentcontent}</span>
+								<span style="color: #979797;"> ${formattedCommentdate} <a
+									href="#" id="replaySub" data-cno="${c.cno}"
+									style="color: #979797; font-size: .875rem">&nbsp;&nbsp;답글쓰기</a>
+								</span>								
 							</div>
-							<span style="color: #979797;"> ${formattedCommentdate} <a
-								href="#" id="replaySub" data-cno="${c.cno}"
-								style="color: #979797; font-size: .875rem">&nbsp;&nbsp;답글쓰기</a>
-							</span>								
 						</div>
 						<hr>
 					</c:if>
@@ -184,7 +203,11 @@
 			<%-- 삭제된 답글 --%>
 
 		<div class="CommentWriter">
-			<br /> ${name }
+			<div style="display: flex; justify-content: space-between;">
+				<span>${name }</span>
+				<span id="contentCount" style="margin-right: 10px;"></span>
+			</div>
+			<br /> 
 			<form id="commentForm"
 				action="<c:url value="/Board/CommentInsert.kjh"/>" method="post">
 				<textarea placeholder="댓글을 남겨보세요" rows="1" name="commentcontent"
@@ -320,9 +343,20 @@ $('#heart').on('click',function(){
             newForm.method = "post";
 
             var textDiv = document.createElement("div");
-            textDiv.textContent = "${name}";
+            textDiv.style.display = "flex"; 
+            textDiv.style.justifyContent = "space-between"; 
+            textDiv.className = "mb-2"; 
             newForm.appendChild(textDiv);
 
+            var nameSpan = document.createElement("span");
+            nameSpan.textContent = "${name}";
+            textDiv.appendChild(nameSpan);
+            
+            var countSpan = document.createElement("span");
+            countSpan.style.marginRight = "10px"; 
+            countSpan.id = "contentCount";
+            textDiv.appendChild(countSpan);
+            
             var textarea = document.createElement("textarea");
             textarea.placeholder = "댓글을 남겨보세요";
             textarea.rows = "1";
@@ -490,6 +524,37 @@ $('#heart').on('click',function(){
         }
     });
     
+    var contentCounts = document.querySelectorAll('[name="commentcontent"]');
+    contentCounts.forEach(function(contentCount) {
+	    contentCount.onkeyup=(e)=>{
+	    	count = 99;
+	    	document.querySelector('#contentCount').textContent 
+	    		= contentCount.value.length+" / "+count;
+	    	if(contentCount.value.length >= count){
+	    		e.preventDefault();
+	    		alert('글자 수를 초과했어요!');
+	    		return;
+	    	}
+	    };
+    });
+    
+    document.addEventListener('keyup', function (e) {
+        // 클릭된 엘리먼트가 원하는 조건을 만족하는지 확인
+        if (e.target.name === 'commentcontent') {
+            count = 99;
+            console.log(e.target.value.length);
+            // 폼 내에서 동적으로 생성된 #contentCount 찾기
+            var contentCount = e.target.closest('form').querySelector('#contentCount');
+            if (contentCount) {
+                contentCount.textContent = e.target.value.length + ' / ' + count;
+                if (e.target.value.length >= count) {
+                    e.preventDefault();
+                    alert('글자 수를 초과했어요!');
+                    return;
+                }
+            }
+        }
+    });
 </script>
 
 

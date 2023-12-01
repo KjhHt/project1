@@ -48,6 +48,8 @@ public class ViewController extends HttpServlet{
 		List<CommentDTO> secondCommentList = dao.secondCommentList(no);
 		List<CommentDTO> resultList = new Vector<>();
 		
+		
+		
 		boolean test = false;
 		int size = firstCommentList.size();
 		if (secondCommentList.size() != 0) {

@@ -14,6 +14,7 @@ public class CommentDTO {
 	private String subcomment;
 	private String subname;
 	private String isdelete;
+	private String profile;
 	
 	public CommentDTO() {}
 	
@@ -93,6 +94,15 @@ public class CommentDTO {
 	public void setIsdelete(String isdelete) {
 		this.isdelete = isdelete;
 	}
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+	
 	
 	
 }
