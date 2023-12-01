@@ -30,6 +30,8 @@ public class ViewController extends HttpServlet{
 		// 조회수 증가 + view정보
 		String url = req.getHeader("referer").substring(req.getHeader("referer").lastIndexOf("/")+1);
 		BoardDTO record = dao.selectOne(no,url);
+		// 줄바꿈
+		record.setContent(record.getContent().replace("\r\n","<br/>"));
         int fileCount = countFiles(record.getAttachFile());
         req.setAttribute("fileCount", fileCount);
 		req.setAttribute("record", record);

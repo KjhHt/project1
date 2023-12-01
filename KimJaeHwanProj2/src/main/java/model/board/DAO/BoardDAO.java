@@ -231,7 +231,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				dto.setCno(rs.getString(1));
 				dto.setNo(rs.getString(2));
 				dto.setUsername(rs.getString(3));
-				dto.setCommentcontent(rs.getString(4));
+				dto.setCommentcontent(rs.getString(4).replace("\r\n","<br/>"));
 				dto.setCommentdate(rs.getDate(5));
 				dto.setReplaywhether(rs.getString(6));
 				dto.setSubcomment(rs.getString(7));
@@ -261,7 +261,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 				dto.setCno(rs.getString(1));
 				dto.setNo(rs.getString(2));
 				dto.setUsername(rs.getString(3));
-				dto.setCommentcontent(rs.getString(4));
+				dto.setCommentcontent(rs.getString(4).replace("\r\n","<br/>"));
 				dto.setCommentdate(rs.getDate(5));
 				dto.setReplaywhether(rs.getString(6));
 				dto.setSubcomment(rs.getString(7));
@@ -294,7 +294,7 @@ public class BoardDAO implements DaoService<BoardDTO>{
 		            dto.setCno(rs.getString(1));
 		            dto.setNo(rs.getString(2));
 		            dto.setUsername(rs.getString(3));
-		            dto.setCommentcontent(rs.getString(4));
+		            dto.setCommentcontent(rs.getString(4).replace("\r\n","<br/>"));
 		            dto.setCommentdate(rs.getDate(5));
 		            dto.setReplaywhether(rs.getString(6));
 		            dto.setSubcomment(rs.getString(7));

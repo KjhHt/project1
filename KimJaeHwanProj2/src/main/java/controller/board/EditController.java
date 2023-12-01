@@ -83,6 +83,13 @@ public class EditController extends HttpServlet{
 		if(filename.startsWith(",")) {
 			filename = filename.substring(1);
 		}
+		
+		//
+		System.out.println(filename.substring(0,1).equals("X,"));
+		
+		if(filename.substring(0,1).equals("X,")) {
+			filename = filename.substring(2);
+		}
 		dto.setAttachFile(filename);
 		int result = dao.update(dto);
 		dao.close();

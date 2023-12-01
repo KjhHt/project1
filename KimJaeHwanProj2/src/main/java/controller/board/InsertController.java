@@ -22,7 +22,6 @@ public class InsertController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 		req.getRequestDispatcher("/WEB-INF/Member/Insert.jsp").forward(req, resp);
 	}
 	
@@ -49,6 +48,7 @@ public class InsertController extends HttpServlet {
 		dto.setTitle(title);
 		dto.setContent(content);
 		dto.setUsername(username);
+		System.out.println("insert 여기야"+filename);
 		dto.setAttachFile(filename);
 		int result = dao.insert(dto);
 		dao.close();

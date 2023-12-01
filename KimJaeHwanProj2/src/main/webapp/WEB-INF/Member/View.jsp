@@ -44,9 +44,7 @@
     margin-left: auto;
   }
 
-  #isComment {
-  	background : rgb(250,250,250);
-  }
+
 
 </style>
 	<c:url value="/images/heart.svg" var="imageUrlHeart" />
@@ -77,7 +75,7 @@
 		</div>
 		<hr />
 		<div class="form-group">
-			<div>
+			<div style="min-height: 300px; height: auto;">
 				<c:if test="${record.attachFile ne 'X'}">
 					<figure class="text-end">
 						<blockquote class="blockquote" style="text-align: right;">
@@ -125,11 +123,11 @@
 					<%-- 답글에 답글 --%>
 					<c:if test="${c.replaywhether eq 'Y' and c.isdelete eq 'N' }">
 					<hr>
-					<div style="display: flex; align-items: center;">
+					<div id="test" style="display: flex; align-items: center;">
 						<div >
 							<img class="img-profile rounded-circle" style="margin-left:50px; width: 40px;" id="img" src="${imageUrlc}">
 						</div>
-						<div style="padding-left:10px; flex-grow: 1;" id='isComment' data-subcomment='${c.subcomment}' data-cno='${c.cno}'>
+						<div style="padding-left:10px; flex-grow: 1;" id='isComment' class="isComment" data-subcomment='${c.subcomment}' data-cno='${c.cno}'>
 							<div style="display: flex; justify-content: space-between; align-items: center;">
 								<div>${c.name}</div>
 								<div style="margin-right: 20px;">
@@ -392,17 +390,16 @@ $('#heart').on('click',function(){
                 newForm.appendChild(hiddenUpdateCno);           	
             }
             
-            var dataSubId = e.target.parentElement.parentElement.getAttribute('id');
+            var dataSubClass = e.target.parentElement.parentElement.className;
             var parentDiv = e.target.parentElement.parentElement;
             var firstChildDiv = parentDiv.querySelector('div:first-child');
             var textContent = firstChildDiv.textContent.trim();
-            
-            if(dataSubId){
+            if(dataSubClass==="isComment"){
 	            var hiddenInputCno = document.createElement("input");
 	            hiddenInputCno.type = "hidden";
 	            hiddenInputCno.name = "subname";
 	            hiddenInputCno.id = "commentSubName"; 
-	            hiddenInputCno.value = updateCno; 
+	            hiddenInputCno.value = textContent; 
 	            newForm.appendChild(hiddenInputCno);
             }
 
