@@ -93,6 +93,8 @@
 		var password = document.getElementById("password");
 		var password_ck = document.getElementById("password_ck");
 		var selfintroduce = document.getElementById("selfintroduce");
+		var name = document.getElementById("name");
+		var email = document.getElementById("email");
 		var isValid = {};
 		username.addEventListener("blur", function() {
 	        var usernameValue = username.value.trim();
@@ -161,6 +163,33 @@
 		    }
 	    });
 		
+		name.addEventListener("blur", function() {
+	        var nameValue = name.value.trim();
+	        var regex = /^[가-힣]{2,4}$/;
+	        if(!regex.test(nameValue)){
+	        	isValid.name = false;
+	        	failMessage(name,"이름은 한글 4글자 이내로 입력해주세요!");
+	        }
+			else{
+				isValid.name = true;
+				successMessage(name,"사용 가능합니다!");
+			}
+	    });
+		
+		email.addEventListener("blur", function() {
+	        var emailValue = email.value.trim();
+	        var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+	        if(!regex.test(emailValue)){
+	        	isValid.email = false;
+	        	failMessage(email,"유효한 이메일 주소를 입력해주세요!");
+	        }
+			else{
+				isValid.email = true;
+				successMessage(email,"사용 가능합니다!");
+			}
+	    });
+		
+		
 		function successMessage(field,message){
 			var id = field.id + "msg";
 			var textMessage = document.createElement("small");
@@ -215,7 +244,22 @@
 				event.preventDefault();
 				return;
 			}
-			
+			//이름
+			var name = document.getElementById("name");
+			if(name.value.trim()==='' || name.value===null){
+				alert('이름을 입력해주세요');
+				name.focus();
+				event.preventDefault();
+				return;
+			}	
+			//이메일
+			var email = document.getElementById("email");
+			if(email.value.trim()==='' || email.value===null){
+				alert('이메일을 입력해주세요');
+				email.focus();
+				event.preventDefault();
+				return;
+			}	
 			var gender = document.querySelectorAll("input[name='gender']");
 			var isGenderCk = Array.from(gender).some(radio => radio.checked);
 			if(!isGenderCk){
@@ -244,7 +288,7 @@
 				selfintroduce.focus();
 				event.preventDefault();
 				return;
-			}	
+			}				
 			
 	        var isValidResult = Object.entries(isValid).find(([field,result])=>result === false);
 	        if (isValidResult) {

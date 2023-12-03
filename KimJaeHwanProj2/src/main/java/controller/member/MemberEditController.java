@@ -41,12 +41,34 @@ public class MemberEditController extends HttpServlet{
 			}
 		}
 		String inter = sb.substring(0,sb.length()-1).toString();
+		if(inter == null || inter.trim().isEmpty() ) {
+			 out.println("<script>alert('관심사항을 선택하세요. -관리자 문의'); history.back();</script>");
+		}
 		String selfintroduce = req.getParameter("selfintroduce");
+		if(selfintroduce == null || selfintroduce.trim().isEmpty() ) {
+			 out.println("<script>alert('자기소개를 입력하세요. -관리자 문의'); history.back();</script>");
+		}
 		String password = req.getParameter("password");
+		if(password == null || password.trim().isEmpty() 
+				|| !password.matches("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()_-])[A-Za-z\\d!@#$%^&*()_-]{8,16}$")) {
+			out.println("<script>alert('비밀번호를 확인하세요. -관리자 문의'); history.back();</script>");
+		}
 		String email = req.getParameter("email");
+		if(email == null || email.trim().isEmpty() ) {
+			out.println("<script>alert('이메일을 입력하세요. -관리자 문의'); history.back();</script>");
+		}
 		String name = req.getParameter("name");
+		if(name == null || name.trim().isEmpty() ) {
+			out.println("<script>alert('이름을 입력하세요. -관리자 문의'); history.back();</script>");
+		}
 		String education = req.getParameter("education");
+		if(education == null || education.trim().isEmpty() ) {
+			out.println("<script>alert('학력를 선택하세요. -관리자 문의'); history.back();</script>");
+		}
 		String gender = req.getParameter("gender");
+		if(gender == null || gender.trim().isEmpty() ) {
+			out.println("<script>alert('성별을 선택하세요. -관리자 문의'); history.back();</script>");
+		}
 		
 		dto.setUsername(username);
 		dto.setPassword(password);

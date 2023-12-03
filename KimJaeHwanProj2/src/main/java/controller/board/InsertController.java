@@ -48,7 +48,6 @@ public class InsertController extends HttpServlet {
 		dto.setTitle(title);
 		dto.setContent(content);
 		dto.setUsername(username);
-		System.out.println("insert 여기야"+filename);
 		dto.setAttachFile(filename);
 		int result = dao.insert(dto);
 		dao.close();

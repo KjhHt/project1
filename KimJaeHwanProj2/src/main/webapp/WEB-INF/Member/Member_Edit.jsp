@@ -6,28 +6,29 @@
 <jsp:include page="/template/HeadNav.jsp"/>
 
 <div class="jumbotron">
-<form action="<c:url value="/Board/EditMember.kjh"/>" method="post">
+<%--<c:url value="/Board/EditMember.kjh"/> --%>
+<form action="#" method="post" id="editForm">
   <fieldset>
     <legend>회원정보 수정</legend>
     <div class="form-group">
-      <label for="exampleInputEmail1">아이디</label>
-      <input type="text" class="form-control" id="" name="username" value="${memberDto.username}">
+      <label for="exampleInputEmail1">아이디(수정불가)</label>
+      <input type="text" class="form-control" id="username" name="username" value="${memberDto.username}" readonly>
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">비밀번호</label>
-      <input type="password" class="form-control" id="" name="password" value="${memberDto.password}">
+      <input type="password" class="form-control" id="password" name="password" value="${memberDto.password}">
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">비밀번호 확인</label>
-      <input type="password" class="form-control" id="" name="password_ck" placeholder="Password">
+      <input type="password" class="form-control" id="password_ck" name="password_ck" placeholder="Password">
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1">이름</label>
-      <input type="text" class="form-control" id="" name="name" value="${memberDto.name}">
+      <input type="text" class="form-control" id="name" name="name" value="${memberDto.name}">
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1">이메일</label>
-      <input type="text" class="form-control" id="" name="email" value="${memberDto.email}">
+      <input type="text" class="form-control" id="email" name="email" value="${memberDto.email}">
     </div>
     <fieldset class="form-group">
       <legend>성별</legend>
@@ -94,7 +95,7 @@
     </div>
     <div class="form-group">
       <label for="exampleTextarea">자기소개</label>
-      <textarea class="form-control" id="exampleTextarea" rows="10" name="selfintroduce" >${memberDto.selfintroduce}</textarea>
+      <textarea class="form-control" id="selfintroduce" rows="10" name="selfintroduce" >${memberDto.selfintroduce}</textarea>
     </div>
 
     <button type="submit" class="btn btn-primary">수정</button>
@@ -102,3 +103,196 @@
   </fieldset>
 </form>
 </div>
+
+<script>
+window.addEventListener("DOMContentLoaded", function() {
+	var form = document.querySelector('#editForm');
+	var password = document.getElementById("password");
+	var password_ck = document.getElementById("password_ck");
+	var selfintroduce = document.getElementById("selfintroduce");
+	var name = document.getElementById("name");
+	var email = document.getElementById("email");
+	var isValid = {};
+
+	password.addEventListener("blur", function() {
+        var passwordValue = password.value.trim();
+        var regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_-])[A-Za-z\d!@#$%^&*()_-]{8,16}$/;
+        if(!regex.test(passwordValue)){
+        	isValid.password = false;
+        	checkPasswordMatch();
+        	failMessage(password,"비밀번호는 8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.");
+        }
+		else{
+			isValid.password = true;
+			successMessage(password,"사용 가능합니다!");
+		}
+    });
+	
+	password_ck.addEventListener("blur", checkPasswordMatch);
+	function checkPasswordMatch() {
+        var passwordValue = password.value.trim();
+        var password_ckValue = password_ck.value.trim();
+        if(passwordValue !== password_ckValue){
+        	failMessage(password_ck,"비밀번호가 일치하지 않습니다!");
+        	isValid.password_ck = false;
+        }
+        else{
+        	successMessage(password_ck,"비밀번호가 일치합니다!");
+        	isValid.password_ck = true;
+        }
+    }
+	
+	selfintroduce.addEventListener("blur", function() {
+	    var selfIntroduceValue = selfintroduce.value.trim();
+	    var maxLength = 1000;
+	    if (selfIntroduceValue.length > maxLength) {
+	        failMessage(selfintroduce, "자기소개는 "+maxLength+"글자 이하로 작성해주세요.");
+	        isValid.selfintroduce = false;
+	    } else {
+	    	if(selfIntroduceValue.length === 0){
+    			selfintroduce.classList.remove("is-valid");
+    			selfintroduce.classList.remove("is-invalid");
+	    	}
+	    	else{
+	    		successMessage(selfintroduce, "");
+	    		isValid.selfintroduce = true;
+	    	}
+	    }
+    });
+	
+	
+	name.addEventListener("blur", function() {
+        var nameValue = name.value.trim();
+        var regex = /^[가-힣]{2,4}$/;
+        if(!regex.test(nameValue)){
+        	isValid.name = false;
+        	failMessage(name,"이름은 한글 4글자 이내로 입력해주세요!");
+        }
+		else{
+			isValid.name = true;
+			successMessage(name,"사용 가능합니다!");
+		}
+    });
+	
+	email.addEventListener("blur", function() {
+        var emailValue = email.value.trim();
+        var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if(!regex.test(emailValue)){
+        	isValid.email = false;
+        	failMessage(email,"유효한 이메일 주소를 입력해주세요!");
+        }
+		else{
+			isValid.email = true;
+			successMessage(email,"사용 가능합니다!");
+		}
+    });
+	
+	
+	function successMessage(field,message){
+		var id = field.id + "msg";
+		var textMessage = document.createElement("small");
+		textMessage.id = id;
+		textMessage.className = "text-success";
+		textMessage.textContent = message;
+		var existingMessage = document.getElementById(id);
+		if(existingMessage){
+			existingMessage.className = "text-success";
+			existingMessage.textContent = message;
+		}
+		else{
+			field.insertAdjacentElement('afterend', textMessage);				
+		}
+        field.classList.remove("is-invalid");
+        field.classList.add("is-valid");
+	}
+	
+	function failMessage(field,message){
+		var id = field.id + "msg";
+		var textMessage = document.createElement("small");
+		textMessage.id = id;
+		textMessage.className = "text-danger";
+		textMessage.textContent = message;
+		var existingMessage = document.getElementById(id);
+		if(existingMessage){
+			existingMessage.className = "text-danger";
+			existingMessage.textContent = message;
+		}
+		else
+			field.insertAdjacentElement('afterend', textMessage);
+        field.classList.remove("is-valid");
+        field.classList.add("is-invalid");
+	}
+	
+	form.addEventListener("submit",function(event){
+		if(password.value.trim()==='' || password.value===null){
+			alert('비밀번호를 입력해주세요');
+			password.focus();
+			event.preventDefault();
+			return;
+		}
+		if(password_ck.value.trim()==='' || password_ck.value===null){
+			alert('비밀번호 확인을 입력해주세요');
+			password_ck.focus();
+			event.preventDefault();
+			return;
+		}
+		//이름
+		var name = document.getElementById("name");
+		if(name.value.trim()==='' || name.value===null){
+			alert('이름을 입력해주세요');
+			name.focus();
+			event.preventDefault();
+			return;
+		}	
+		//이메일
+		var email = document.getElementById("email");
+		if(email.value.trim()==='' || email.value===null){
+			alert('이메일을 입력해주세요');
+			email.focus();
+			event.preventDefault();
+			return;
+		}	
+		var gender = document.querySelectorAll("input[name='gender']");
+		var isGenderCk = Array.from(gender).some(radio => radio.checked);
+		if(!isGenderCk){
+			alert('성별을 선택해주세요');
+			event.preventDefault();
+			return;
+		}
+		
+		var education = document.getElementById("education");
+		if(education.value.trim()==='' || education.value===null){
+			alert('학력사항을 선택해주세요');
+			event.preventDefault();
+			return;
+		}
+		
+		var inter = document.querySelectorAll('input[name="inters"]');
+		var isInterCk = Array.from(inter).some(check => check.checked);
+		if(!isInterCk){
+			alert('관심사항을 1개이상 선택해주세요');
+			event.preventDefault();
+			return;
+		}
+		
+		if(selfintroduce.value.trim()==='' || selfintroduce.value===null){
+			alert('자기소개를 입력해주세요');
+			selfintroduce.focus();
+			event.preventDefault();
+			return;
+		}				
+		
+        var isValidResult = Object.entries(isValid).find(([field,result])=>result === false);
+        if (isValidResult) {
+        	alert('일치하지 않는 항목이 있습니다.');
+            event.preventDefault();  
+        	document.getElementById(isValidResult[0]).focus();
+            return;
+        }
+	});
+	
+});
+
+</script>
+
+
