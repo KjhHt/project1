@@ -3,33 +3,42 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="/template/HeadNav.jsp"/>
+<style>
+  .horizontal-form-group {
+    display: flex;
+  }
 
-<div class="jumbotron">
+  .horizontal-form-group fieldset {
+    width: 178px;
+  }
+
+  .horizontal-form-group fieldset:nth-child(3) {
+    width: 178px;
+  }
+</style>
+
+<div class="jumbotron" style="width:600px; margin-left:auto; margin-right:auto;">
 <form action="#" method="post" id="joinForm">
   <fieldset>
-    <legend>회원가입</legend>
+     <h2 class="display-4" style="text-align:center; margin-bottom:20px">회원가입</h2>
     <div class="form-group">
-      <label for="exampleInputEmail1">아이디</label>
-      <input type="text" class="form-control" id="username" name="username" placeholder="아이디를 입력하세요">
+      <input type="text" class="form-control" id="username" name="username" placeholder="아이디">
     </div>
     <div class="form-group">
-      <label for="exampleInputPassword1">비밀번호</label>
-      <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
     </div>
     <div class="form-group">
-      <label for="exampleInputPassword1">비밀번호 확인</label>
-      <input type="password" class="form-control" id="password_ck" name="password_ck" placeholder="Password">
+      <input type="password" class="form-control" id="password_ck" name="password_ck" placeholder="비밀번호 확인">
     </div>
     <div class="form-group">
-      <label for="exampleInputEmail1">이름</label>
-      <input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력하세요">
+      <input type="text" class="form-control" id="name" name="name" placeholder="이름">
     </div>
     <div class="form-group">
-      <label for="exampleInputEmail1">이메일</label>
-      <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요">
+      <input type="text" class="form-control" id="email" name="email" placeholder="이메일">
     </div>
+<div class="horizontal-form-group">  
     <fieldset class="form-group">
-      <legend>성별</legend>
+      <legend style="font-size:22px; color:gray;">성별</legend>
       <div class="form-check">
         <label class="form-check-label">
           <input type="radio" class="form-check-input" name="gender" id="gender1" value="M">
@@ -43,20 +52,10 @@
         </label>
       </div>
     </fieldset>
-    <fieldset class="form-group">
-      <legend>학력</legend>
-      <select class="form-control" id="education" name="education">
-        <option value="" selected>선택 필수</option>
-        <option value="1">초등학교</option>
-        <option value="2">중학교</option>
-        <option value="3">고등학교</option>
-        <option value="4">대학교</option>
-        <option value="5">대학원</option>
-      </select>
-    </fieldset>
+
     <div class="form-group">
     <fieldset class="form-group">
-      <legend>관심사항</legend>
+      <legend style="font-size:22px; color:gray;">관심사항</legend>
       <div class="form-check">
         <label class="form-check-label">
           <input class="form-check-input" type="checkbox" id="inters1" name="inters" value="1" >
@@ -76,12 +75,23 @@
         </label>
       </div>
     </fieldset>
-    </div>
+    	</div>
+    <fieldset class="form-group">
+      <select class="form-control" id="education" name="education" >
+        <option value="" selected>학력 선택(필수)</option>
+        <option value="1">초등학교</option>
+        <option value="2">중학교</option>
+        <option value="3">고등학교</option>
+        <option value="4">대학교</option>
+        <option value="5">대학원</option>
+      </select>
+    </fieldset>
+
+   </div>
     <div class="form-group">
-      <label for="exampleTextarea">자기소개</label>
       <textarea class="form-control" id="selfintroduce" rows="10" name="selfintroduce" placeholder="자기소개를 입력하세요"></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">등록</button>
+    <button style="margin-left:483px;" type="submit" class="btn btn-primary">등록</button>
   </fieldset>
 </form>
 </div>

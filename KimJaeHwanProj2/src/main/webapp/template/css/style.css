@@ -1,0 +1,217 @@
+.container {
+  padding: 50px 0;
+}
+.profileImgDiv {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0 0 50px;
+}
+.customerInfo {
+  width: 60%;
+  vertical-align: middle;
+  margin: auto;
+  padding-left: 24px;
+}
+.customerInfo span:nth-child(1) {
+  font-size: 24px;
+  font-weight: 700;
+}
+.customerInfo span:nth-child(2) {
+  font-size: 16px;
+  padding-left: 10px;
+}
+.customerSubInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 36px;
+  height: 420px;
+}
+.customerSubInfo div {
+  display: flex;
+  flex-direction: row;
+}
+
+select.formControl {
+  color: #787878;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  border: none;
+}
+
+.answer_select_drop {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-around; */
+  z-index: 99999;
+  background-color: #fff;
+  border-radius: 16px;
+  border: 1px solid rgb(190,190,190);
+  background: #FFF;
+  gap: 12px;
+  padding: 16px 24px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.answer_select_drop li {
+  text-align: center;
+}
+
+.answer_select_drop li button {
+  color: rgba(34, 34, 34, 0.40);
+  font-size: 16px;
+  font-weight: 400;
+  width: 100%;
+}
+.answer_select_drop li:focus button {
+  color: #222;
+  font-size: 20px;
+}
+.answer_select_accordion {
+  display: flex;
+  flex-direction: column;
+  z-index: 999999;
+  margin: 0 24px;
+  left: 268px;
+  position: absolute;
+}
+
+.answer_select_accordion_btn {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 36px 8px 12px;
+  align-self: stretch;
+  border-radius: 16px;
+  border: 1px solid rgb(190,190,190);
+  background-color: rgba(255, 255, 255, 0.5);
+  position: relative;
+  text-align: left;
+  font-size: 14px;
+  color: rgba(34, 34, 34, 0.4);
+  margin-bottom: 8px;
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 24px;
+  
+}
+.arrow_down {
+  background-image: url('../arrow_down.png');
+}
+.arrow_up {
+  background-image: url('../arrow_up.svg');
+}  
+
+.option-btn {
+  border: none !important;
+  background-color: #fff !important;
+}
+
+.select_list {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+#img {
+  border-radius: 50%;
+  width: 150px;
+  height: 145px;
+}
+
+.profile-simple {
+  width: 100%;
+  padding: 36px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  height: 420px;
+  position: relative;
+}
+.contents {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+}
+.profile-simple > div {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 36px;
+  width: 100%;
+}
+.btnDiv {
+  display: inline-block;
+  padding: 0 auto;
+  position: absolute;
+  bottom: 36px;
+  height: 60px;
+  width: calc(100% - 72px) !important;
+}
+.modifyBtn {
+  background-color: rgb(247,247,247);
+  color: #222;
+  width: 100%;
+  border: none;
+  background-image: url('../arrow_next.svg');
+  background-repeat: no-repeat;
+  background-position: center right 24px;
+}
+.modifyBtn:hover {
+  background-color: #313337;
+  color: #fff;
+}
+.customerSubInfo ul {
+  padding: 0 24px;
+}
+.customerSubInfo li:not(:last-child) {
+  list-style: none;
+  margin-bottom: 36px;
+  display: flex;
+  flex-direction: row;
+}
+.customerSubInfo li {
+  list-style: none;
+}
+.customerSubInfo li span:nth-child(1),
+.customerSubInfo li p {
+  color: #313337;
+  font-size: 16px;
+  padding-right: 48px;
+  width: 40%;
+}
+.customerSubInfo li span:nth-child(2) {
+  color: #5C6875;
+}
+.customerSubInfo li:last-child p::before,
+.customerSubInfo li span:first-child:before {
+  content: "";
+  top: 4px;
+  left: 0;
+  width: 1px !important;
+  height: 22px;
+  color: rgb(190,190,190);
+  background-color: rgb(190,190,190);
+  padding-right: 2px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.customerSubInfo li:last-child p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 22px;
+  vertical-align: middle;
+  margin-bottom: 10px;
+}
+.customerSubInfo li:last-child > div {
+  padding: 12px;
+  background-color: rgb(247,247,247);
+  min-height: 120px;
+  color: #5C6875;
+}

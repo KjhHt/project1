@@ -302,6 +302,9 @@ $('#heart').on('click',function(){
 	}
 
     function submitCommentForm() {
+        var scrollPos = window.scrollY;
+        sessionStorage.setItem('scrollPos', scrollPos);
+        
         document.getElementById("commentForm").submit();
     }
 	

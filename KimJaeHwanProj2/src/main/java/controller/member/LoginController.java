@@ -49,7 +49,7 @@ public class LoginController extends HttpServlet {
 			
 			req.getRequestDispatcher("/WEB-INF/Member/Member_MyPage.jsp").forward(req, resp); 
 		}else {
-			req.setAttribute("ERROR", "등록된 회원아니에용");
+			req.setAttribute("ERROR", "불일치");
 			req.getRequestDispatcher("/WEB-INF/Member/Login.jsp").forward(req, resp); 
 		}
 		dao.close();

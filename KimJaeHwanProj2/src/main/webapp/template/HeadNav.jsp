@@ -17,11 +17,11 @@
    <link href="<c:url value='/template/css/_variables.scss'/>" rel="stylesheet">
    <link href="<c:url value='/template/css/bootstrap.css'/>" rel="stylesheet">
    <link href="<c:url value='/template/css/bootstrap.min.css'/>" rel="stylesheet">
+   <%-- <link href="<c:url value='/template/css/style.css'/>" rel="stylesheet"> --%>
 
 </head>
 <!-- Topbar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow" style="border:0; height:60px">
-
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
 	<c:if test="${username eq null}">
@@ -57,33 +57,9 @@
             <a class="nav-link" href="#" id="userDropdown" role="button">
                 <span class="mr-2 d-none d-lg-inline" style="color:black; font-weight:bold; font-size:15px;">홍길동님</span>
                 <img class="img-profile rounded-circle" style="width:19px;"
-                    id="img" src="${imageUrl}">
+                    src="${imageUrl}">
             </a>
         </li>
 	</c:if>
     </ul>
-
 </nav>
-<!-- End of Topbar -->
-
-<%-- 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="<c:url value="/"/>">게시판</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarColor01">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="<c:url value="/Board/List.kjh"/>">리스트</a>
-        <a class="nav-link" href="<c:url value="/Board/MyPage.kjh"/>">마이페이지</a>
-      </li>
-    </ul>
-    <c:if test="${username ne null}">
-	    <span style="font-size:18px" class="text-white font-weight-bold display-5">${username}님 반가워용^^! &nbsp;&nbsp;&nbsp;</span> 
-	    <a class="btn btn-danger btn-lg" href="<c:url value="/Logout.kjh"/>" role="button">로그아웃</a>
-	</c:if>
-  </div>
-</nav>
---%>

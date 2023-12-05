@@ -10,7 +10,7 @@
 <c:if test="${empty username}">	
 <div class="jumbotron">				
 <div class="container py-5" id="hometop">
-  <div class="row pt-5 mt-5 align-items-center justify-content-center justify-content-lg-between text-center text-lg-left flex-lg-row-reverse">
+  <div class="row pt-5 mt-5 align-items-center justify-content-center justify-content-lg-between text-center text-lg-left ">
     <div class="col-md-9 col-lg-6 col-xl-5 mb-4 mb-lg-0 pr-lg-5 pr-xl-0">
       <div>
         <h1 class="display-4">게시판 구현</h1>
@@ -19,6 +19,9 @@
         </p>
         <div class="mt-4 mt-md-5">
           <form id="frm" action="<c:url value="/Login.kjh"/>" method="post">
+          	<c:if test="${not empty ERROR }">
+            	<div class="text-danger mb-2" style="text-align:center; font-size:20px">아이디와 비밀번호가 일치하지 않아요!</div>
+            </c:if>
             <input class="form-control h-100" type="text" id="username" name="username" placeholder="아이디를 입력하세요">
             <input class="form-control h-100 my-3" type="password" id="password" name="password" placeholder="비밀번호를 입력하세요">
             <div class="custom-control custom-checkbox mt-3">

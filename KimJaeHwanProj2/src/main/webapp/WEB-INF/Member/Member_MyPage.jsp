@@ -1,92 +1,128 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<link href="<c:url value='/template/css/style.css'/>" rel="stylesheet">
 <jsp:include page="/template/HeadNav.jsp" />
+
 
 <div class="jumbotron">
 	<c:if test="${not empty username}">
-
-
 	<!-- 여기에다가 프로필 -->
-	
 	<h1 class="display-4">마이페이지</h1>
 	<hr class="my-4">
 	<div class="container white-box">
-		<div class="row">
-			<div class="col-md-8 profile-simple">
-				<div class="d-flex">
-					<div class="flex-shrink-0">
+		<div class="contents">
+			<div class="profile-simple">
+				<div>
+					<div class="profileImgDiv">
 						<c:url value="/images/${list.profile}.png" var="imageUrl" />
 						<img id="img" src="${imageUrl}" width="150" height="145" alt="프로필" /> 
-
-    <div class="form-group">
-      <label for="updateProfileImage" class="form-label mt-4">프로필 캐릭터 이미지</label>
-      <select class="form-select" id="updateProfileImage" onchange="updateProfileImage()" >
-        <option value="0" ${list.profile == '0' ? 'selected' : ''}>미 설정</option>
-        <option value="1" ${list.profile == '1' ? 'selected' : ''}>배찌</option>
-        <option value="2" ${list.profile == '2' ? 'selected' : ''}>우니</option>
-        <option value="3" ${list.profile == '3' ? 'selected' : ''}>디즈니</option>
-        <option value="4" ${list.profile == '4' ? 'selected' : ''}>마리드</option>
-        <option value="5" ${list.profile == '5' ? 'selected' : ''}>케피</option>
-        <option value="6" ${list.profile == '6' ? 'selected' : ''}>모스</option>
-        <option value="7" ${list.profile == '7' ? 'selected' : ''}>에띠</option>
-        <option value="8" ${list.profile == '8' ? 'selected' : ''}>다오</option>
-      </select>
-    </div>			
-						
 					</div>
-					<div class="flex-grow-1 ms-3">
-						<h3>${list.name }님</h3>
-						<p>${list.email }</p>
-						<div>
-							<i class="fa-solid fa-location-dot d-inline-block"
-								style="color: #6fbaf8"></i> <span
-								style="color: #6fbaf8">${list.gender }</span>
-						</div>
-		<a class="btn btn-success"
-			href="<c:url value="/Board/EditMember.kjh"/>" role="button">회원정보수정</a>
+					<div class="customerInfo">
+						<span>${list.name}</span><span style="color: #6fbaf8">${list.gender}</span>
+						<p>${list.email}</p>
+						<div class="answer_select_accordion">
+							<button type="button"  class="answer_select_accordion_btn arrow_down" style="display: flex;">
+								<c:choose>
+								    <c:when test="${list.profile eq 1}">배찌</c:when>
+								    <c:when test="${list.profile eq 2}">우니</c:when>
+								    <c:when test="${list.profile eq 3}">디즈니</c:when>
+								    <c:when test="${list.profile eq 4}">마리드</c:when>
+								    <c:when test="${list.profile eq 5}">케피</c:when>
+								    <c:when test="${list.profile eq 6}">모스</c:when>
+								    <c:when test="${list.profile eq 7}">에띠</c:when>
+								    <c:when test="${list.profile eq 8}">다오</c:when>
+									<c:otherwise>미설정</c:otherwise>
+								</c:choose>
+							</button>
+							<ul class="answer_select_drop" style="display: none;">
+								<li class="select_list"><button type="button" class="option-btn" value="0">미설정</button></li>
+								<li class="select_list"><button type="button" class="option-btn" value="1">배찌</button></li>
+								<li class="select_list"><button type="button" class="option-btn" value="2">우니</button></li>
+								<li class="select_list"><button type="button" class="option-btn" value="3">디즈니</button></li>
+								<li class="select_list"><button type="button" class="option-btn" value="4">마리드</button></li>
+								<li class="select_list"><button type="button" class="option-btn" value="5">케피</button></li>
+								<li class="select_list"><button type="button" class="option-btn" value="6">모스</button></li>
+								<li class="select_list"><button type="button" class="option-btn" value="7">에띠</button></li>
+								<li class="select_list"><button type="button" class="option-btn" value="8">다오</button></li>
+							</ul>
+						</div>	
 					</div>
+				</div>
+				<div class="btnDiv">
+					<button class="modifyBtn">회원정보 수정</button>
 				</div>
 			</div>
-			<div class="col-md-4 border-left">
-				<div class="row profile-detail">
-					<div class="col-6">
-						<p>관심사항</p>
-					</div>
-					<div class="col-6">
-						<p>${list.inters }</p>
-					</div>
-					<div class="col-6">
-						<p>학력</p>
-					</div>
-					<div class="col-6">
-						<p>${list.education }</p>
-					</div>
-					<div class="col-6">
-						<p>등록일</p>
-					</div>
-					<div class="col-6">
-						<p>${list.regidate }</p>
-					</div>
-					<div class="col-6">
+			<div class="customerSubInfo">
+				<ul>
+					<li>
+						<span>관심사항</span>
+						<span>
+							<c:if test="${fn:contains(list.inters, '정치')}">
+								<button id="politics" type="button" onclick="test(event)" class="btn btn-secondary">정치</button>
+							</c:if>
+							<c:if test="${fn:contains(list.inters, '경제')}">
+								<button id="economy" type="button" onclick="test(event)" class="btn btn-secondary">경제</button>
+							</c:if>
+							<c:if test="${fn:contains(list.inters, '연예')}">
+								<button id="entertainment" type="button" onclick="test(event)" class="btn btn-secondary">연예</button>
+							</c:if>
+						</span>
+					</li>
+					<li>
+						<span>학력</span>
+						<span>
+							<c:choose>
+							    <c:when test="${list.education eq 1}">초등학교</c:when>
+							    <c:when test="${list.education eq 2}">중학교</c:when>
+							    <c:when test="${list.education eq 2}">고등학교</c:when>
+							    <c:when test="${list.education eq 2}">대학교</c:when>
+								<c:otherwise>대학원</c:otherwise>
+							</c:choose>
+						</span>
+					</li>
+					<li>
+						<span>등록일</span>
+						<span>${list.regidate}</span>
+					</li>
+					<li>
 						<p>자기소개</p>
-					</div>
-					<div class="col-6">
-						<p>${list.selfintroduce }</p>
-					</div>
-				</div>
+						<div>
+							${list.selfintroduce}
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
 	</c:if>
 
 </div>
+
+
 <script>
 
+	var editButton = document.querySelector('.modifyBtn');
+	editButton.onclick=()=>{
+		location.href="<c:url value="/Board/EditMember.kjh"/>"
+	}
+
+	function test(e){
+		var interId;
+		if( e.target.id === 'politics' )
+			interId = 'politics';
+		else if( e.target.id === 'economy' )
+			interId = 'economy';
+		else if( e.target.id === 'entertainment' )
+			interId = 'entertainment';
+		else
+			interId = 'error';
+		window.open('<c:url value="/Board/Scrapping.kjh?interId='+interId+'"/>','Scrapping','width=800,height=800');
+	}
 	
-	function updateProfileImage(){
-		var selectedValue = document.getElementById('updateProfileImage').value;
-		
+	function updateProfileImage(value){
+		var selectedValue = value;
 		axios.post('<c:url value="/Board/ProfileUpdate.kjh"/>',
 				  { data : selectedValue })
 		.then(function(response){
@@ -140,7 +176,35 @@
 	    imageElement.src = imageUrl;
 	}
 	
-	
+	$('.answer_select_accordion_btn').click(function(){
+		$('.answer_select_drop').stop().slideUp(400);
+		$('.answer_select_accordion_btn').removeClass('arrow_up');
+		if ($(this).next('.answer_select_drop').is(':hidden')){
+			$(this).next('.answer_select_drop').slideDown(400);
+			$(this).addClass('arrow_up');
+			$(this).removeClass('arrow_down');
+		} else {
+			$(this).next('.answer_select_drop').slideUp(400);
+			console.log("arrow");
+			$(this).removeClass('arrow_up');
+			$(this).addClass('arrow_down');
+		}
+	});
+
+	var imgBtn = document.querySelectorAll('.option-btn');
+	var imgAccordion = document.querySelector('.answer_select_accordion_btn');
+	imgBtn.forEach(function(button) {
+		button.addEventListener('click', function() {
+			var buttonValue = button.value;
+			var buttonText = button.textContent;
+			if (buttonValue !== null || buttonValue.trim() !== "") {
+				imgAccordion.textContent = buttonText;
+				updateProfileImage(buttonValue);
+				$('.answer_select_drop').slideUp(400);
+				$('.select_list button').css("color", "#222");
+			}
+		});
+	});
 	
 	
 </script>

@@ -19,7 +19,7 @@ import model.board.PagingUtil;
 import model.board.DAO.BoardDAO;
 import model.board.DTO.BoardDTO;
 
-@WebServlet(urlPatterns = "/Board/List.kjh",initParams = {@WebInitParam(name="BLOCK-PAGE",value="3"),@WebInitParam(name="PAGE-SIZE",value="5")})
+@WebServlet(urlPatterns = "/Board/List.kjh",initParams = {@WebInitParam(name="BLOCK-PAGE",value="5"),@WebInitParam(name="PAGE-SIZE",value="5")})
 public class ListController extends HttpServlet {
 	
 	@Override
