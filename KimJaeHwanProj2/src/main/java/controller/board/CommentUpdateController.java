@@ -17,8 +17,6 @@ public class CommentUpdateController extends HttpServlet{
 		String updateCno = req.getParameter("updateCno");
 		String content = req.getParameter("commentcontent");
 		String no = req.getParameter("no");
-		System.out.println("updateCno = " +updateCno);
-		System.out.println("content = " +content);
 		BoardDAO dao = new BoardDAO(getServletContext());
 		int result = dao.updateComment(updateCno,content);
 		if(result==0) {

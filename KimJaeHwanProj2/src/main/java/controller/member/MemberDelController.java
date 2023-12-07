@@ -31,7 +31,6 @@ public class MemberDelController extends HttpServlet {
 			out.println("alert('회원탈퇴 완료되었습니다!');");
 			out.println("location.href='"+req.getContextPath() + "/index.jsp';");
 			out.println("</script>");
-			//토큰,세션 삭제구현
 		}
 		else {
 			resp.setContentType("text/html; charset=UTF-8");

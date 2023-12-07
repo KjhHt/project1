@@ -173,8 +173,19 @@ public class BoardDAO implements DaoService<BoardDTO>{
 	@Override
 	public int delete(BoardDTO dto) {
 		int affected=0;
+		String likesSql = "DELETE likes WHERE no = ?";
+		String commentSql = "DELETE commenttable WHERE no = ?";
 		String sql="DELETE board WHERE no = ?";
 		try {
+			//좋아요 username 모두 삭제
+			psmt = conn.prepareStatement(likesSql);
+			psmt.setString(1, dto.getNo());
+			affected = psmt.executeUpdate();
+			//댓글 username 모두 삭제
+			psmt = conn.prepareStatement(commentSql);
+			psmt.setString(1, dto.getNo());
+			affected = psmt.executeUpdate();
+			//게시판 삭제 <=
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getNo());	
 			

@@ -21,6 +21,7 @@ public class ViewController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String username = (String) req.getSession().getAttribute("username");
+		req.setAttribute("username", username);
 		MemberDAO dao2 = new MemberDAO(getServletContext());
 		MemberDTO info = dao2.selectOne(username);
 		req.setAttribute("name", info.getName());
@@ -84,12 +85,6 @@ public class ViewController extends HttpServlet{
 		}
 		dao.close();
 		req.getRequestDispatcher("/WEB-INF/Member/View.jsp").forward(req, resp);
-	}
-	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("DOPOST");
-		super.doPost(req, resp);
 	}
 	
     private static int countFiles(String attachFile) {

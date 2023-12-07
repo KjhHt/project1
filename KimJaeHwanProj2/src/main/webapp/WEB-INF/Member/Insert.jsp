@@ -15,7 +15,7 @@
         
         
     </style>
-<div class="jumbotron">
+<div class="jumbotron" style="padding-left:120px; padding-right:120px;">
 	<form action="<c:url value="/Board/Insert.kjh"/>" method="post" enctype="multipart/form-data">
 	  <fieldset>
 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">

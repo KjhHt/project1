@@ -50,7 +50,7 @@
 	<c:url value="/images/heart.svg" var="imageUrlHeart" />
 	<c:url value="/images/heart-fill.svg" var="imageUrlHeartFill" />
 	<c:url value="/images/pencil-square.svg" var="pencilSquare" />
-<div class="jumbotron" style="background-color: white;">
+<div class="jumbotron" style="background-color: white; padding-left:200px; padding-right:200px;">
 	<div class="container mt-3">
 		<h1 style="color: green;">'한국 ICT 1기'</h1>
 		<h2>${record.title }</h2>
@@ -70,7 +70,7 @@
 				  <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
 				  <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2" />
 				</svg>
-				<span style="font-size: 15px">&nbsp;댓글${commentCount}</span>
+				<span style="font-size: 15px">&nbsp;댓글 ${commentCount}</span>
 			</div>
 		</div>
 		<hr />
@@ -101,8 +101,8 @@
 			<c:if test="${isLike==1}">
 				<img id="heart" src="${imageUrlHeartFill}" alt="좋아요" />
 			</c:if>
-			<span>좋아요</span> <span id="likeNum">${likeRecord}</span>
-
+			<span>좋아요</span>
+			<span id="likeNum">${likeRecord}&nbsp;&nbsp;</span>
 			<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
 			  <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
 			  <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2" />
@@ -114,9 +114,7 @@
 		<div class="comment_inbox" id="buttonNode">
 			<strong class="d-block mb-2" style="font-size: 17px">댓글</strong>
 				<c:forEach var="c" items="${resultList}">
-				
 					<c:url value="/images/${c.profile }.png" var="imageUrlc" />
-					
 					<c:set var="formattedDate" value="${commentDTO.commentdate.time}" />
 					<fmt:formatDate value="${c.commentdate}"
 						pattern="yy/MM/dd HH:mm:ss" var="formattedCommentdate" />
@@ -130,17 +128,20 @@
 						<div style="padding-left:10px; flex-grow: 1;" id='isComment' class="isComment" data-subcomment='${c.subcomment}' data-cno='${c.cno}'>
 							<div style="display: flex; justify-content: space-between; align-items: center;">
 								<div>${c.name}</div>
-								<div style="margin-right: 20px;">
-									<a id="updateComment" href="javascript:void(0);" style="color: black; margin-right: 5px;">
-										<img id="commentEdit" src="${pencilSquare}" alt="업데이트" />
-									</a>
-									<a id="deleteComment" href="javascript:void(0);" style="color: black;">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-										  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-										  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-										</svg>
-									</a>
-								</div>
+								<%--댓글 작성자인지? --%>
+								<c:if var="isWriter" test="${username eq c.username}" >
+									<div style="margin-right: 20px;">
+										<a id="updateComment" href="javascript:void(0);" style="color: black; margin-right: 5px;">
+											<img id="commentEdit" src="${pencilSquare}" alt="업데이트" />
+										</a>
+										<a id="deleteComment" href="javascript:void(0);" style="color: black;">
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+											  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+											  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+											</svg>
+										</a>
+									</div>
+								</c:if>
 							</div>							
 							<div>
 								<c:if test="${c.subname ne 'X'}">
@@ -166,6 +167,8 @@
 							<div id='isComment' data-cno='${c.cno}' style="flex-grow: 1; margin-left: 10px;" >
 								<div style="display: flex; justify-content: space-between; align-items: center;">
 									<div>${c.name}</div>
+									<%--댓글 작성자인지? --%>
+									<c:if var="isWriter" test="${username eq c.username}" >
 									<div style="margin-right: 20px;">
 										<a id="updateComment" href="javascript:void(0);" style="color: black; margin-right: 5px;">
 											<img id="commentEdit" src="${pencilSquare}" alt="업데이트" />
@@ -177,6 +180,7 @@
 											</svg>
 										</a>
 									</div>
+									</c:if>
 								</div>						
 								<div>
 									<c:if test="${c.subname ne 'X'}">
@@ -213,20 +217,21 @@
 				<input type="hidden" name="no" value="${param.no }" />
 				<div class="comment_attach mt-2 d-flex align-items-center">
 					<div class="register_box ml-auto">
-						<a href="#" role="button" class="btn btn-primary"
+						<a href="#" role="button" class="btn btn-secondary"
 							onclick="submitCommentForm()">등록</a>
 					</div>
 				</div>
 			</form>
 		</div>
 		<div>
-			<a class="btn btn-primary btn-lg"
-				href="<c:url value="/Board/Insert.kjh"/>" role="button">글쓰기</a> <a
-				class="btn btn-primary btn-lg"
-				href="<c:url value="/Board/Edit.kjh?no=${param.no}"/>" role="button">수정</a>
-			<a class="btn btn-danger btn-lg" id="deleteButton" role="button">삭제</a>
-			<a class="btn btn-primary btn-lg" style="float: right;"
-				href="<c:url value="/Board/List.kjh"/>" role="button">목록</a>
+		
+			<a class="btn btn-success" href="<c:url value="/Board/Insert.kjh"/>" role="button">글쓰기</a>
+			<%-- 작성자인지?? --%>
+			<c:if var="isWriter" test="${username eq record.username}" >
+				<a class="btn btn-secondary" href="<c:url value="/Board/Edit.kjh?no=${param.no}"/>" role="button">수정</a>
+				<a class="btn btn-secondary" onclick="deleteClick()" id="deleteButton" role="button">삭제</a>
+			</c:if>
+			<a class="btn btn-secondary" style="float: right;" href="<c:url value="/Board/List.kjh"/>" role="button">목록</a>
 		</div>
 	</div>
 </div>
@@ -288,19 +293,18 @@ $('#heart').on('click',function(){
     }
 });
 
-
-
-	var deleteButton = document.querySelector('#deleteButton');
-	
-	deleteButton.onclick=()=>{
-		if(confirm("정말로 삭제하시겠습니까?")){
-			location.replace(" <c:url value='/Board/Delete.kjh?no=${param.no}'/> ");
-		}
-		else{
-			return;
+	function deleteClick(){
+		var deleteButton = document.querySelector('#deleteButton');
+		deleteButton.onclick=()=>{
+			if(confirm("정말로 삭제하시겠습니까?")){
+				location.replace(" <c:url value='/Board/Delete.kjh?no=${param.no}'/> ");
+			}
+			else{
+				return;
+			}
 		}
 	}
-
+	
     function submitCommentForm() {
         var scrollPos = window.scrollY;
         sessionStorage.setItem('scrollPos', scrollPos);
@@ -317,7 +321,9 @@ $('#heart').on('click',function(){
     buttonNode.onclick = function (e) {
         if (e.target.tagName === "A" && e.target.id === 'replaySub') {
             e.preventDefault();
-            
+            var img = e.target.parentElement.parentElement.parentElement.firstElementChild.firstElementChild;
+            img.style.marginBottom = '187px';
+            console.log(e.target.parentElement.parentElement.parentElement.firstElementChild.firstElementChild)
             var scrollPos = window.scrollY;
             sessionStorage.setItem('scrollPos', scrollPos);
             
@@ -417,13 +423,14 @@ $('#heart').on('click',function(){
             var submitButton = document.createElement("a");
             submitButton.href = "#";
             submitButton.role = "button";
-            submitButton.className = "btn btn-primary";
+            submitButton.className = "btn btn-secondary";
             submitButton.textContent = "등록";
 
             var cancelButton = document.createElement("a");
             cancelButton.href = "javascript:void(0);";
             cancelButton.role = "button";
-            cancelButton.className = "btn btn-danger";
+            cancelButton.className = "btn btn-secondary";
+            cancelButton.style.marginRight = "3px";
             cancelButton.textContent = "취소";
 
             registerBoxDiv.appendChild(cancelButton);
@@ -448,6 +455,7 @@ $('#heart').on('click',function(){
                 commentUpdate=null;
                 contentText=null;
                 updateCno=null;
+                img.style.marginBottom = '0px';
                 previousForm.remove();
             };
             

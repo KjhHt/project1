@@ -28,7 +28,7 @@
 				<input type="checkbox" class="custom-control-input" name="idSave" value="N" id="idSave" />
 				<label class="custom-control-label" for="idSave">아이디 저장</label>
             </div>
-            <button class="btn btn-primary flex-shrink-0" type="button" onclick="return chk_login()">로그인</button>
+            <button id="loginBtn" class="btn btn-primary flex-shrink-0" type="button" onclick="return chk_login()">로그인</button>
           </form>
         </div>
       </div>
@@ -71,7 +71,13 @@
 
 
 <script>
-
+	document.addEventListener("keydown", function(event) {
+		if (event.keyCode === 13) {
+			console.log('엔터누름')
+			document.getElementById("loginBtn").click();
+		}
+	});
+	
 	function chk_login(){
 		if(document.getElementById("username").value===''){
 			alert('아이디를 입력해주세요');

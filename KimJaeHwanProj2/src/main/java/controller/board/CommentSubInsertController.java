@@ -22,11 +22,6 @@ public class CommentSubInsertController extends HttpServlet{
 		String content = req.getParameter("commentcontent");
 		String subname = req.getParameter("subname");
 		
-		System.out.println("??"+subname+"?");
-		System.out.println(subname==null);
-		System.out.println(subname=="");
-		System.out.println(content);
-		
 		if(subname==null) {
 			subname="X";
 		}

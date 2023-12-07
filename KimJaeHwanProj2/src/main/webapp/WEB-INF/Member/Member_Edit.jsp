@@ -4,34 +4,47 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <jsp:include page="/template/HeadNav.jsp"/>
+<style>
+  .horizontal-form-group {
+    display: flex;
+  }
 
-<div class="jumbotron">
-<%--<c:url value="/Board/EditMember.kjh"/> --%>
+  .horizontal-form-group fieldset {
+    width: 178px;
+  }
+
+  .horizontal-form-group fieldset:nth-child(3) {
+    width: 178px;
+  }
+</style>
+
+<div class="jumbotron" style="width:600px; margin-left:auto; margin-right:auto;">
 <form action="#" method="post" id="editForm">
   <fieldset>
-    <legend>회원정보 수정</legend>
+    <h2 class="display-4" style="text-align:center; margin-bottom:20px">회원정보 수정</h2>
     <div class="form-group">
       <label for="exampleInputEmail1">아이디(수정불가)</label>
       <input type="text" class="form-control" id="username" name="username" value="${memberDto.username}" readonly>
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">비밀번호</label>
-      <input type="password" class="form-control" id="password" name="password" value="${memberDto.password}">
+      <input type="password" class="form-control" id="password" name="password" value="${memberDto.password}" placeholder="비밀번호" >
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">비밀번호 확인</label>
-      <input type="password" class="form-control" id="password_ck" name="password_ck" placeholder="Password">
+      <input type="password" class="form-control" id="password_ck" name="password_ck" placeholder="비밀번호 확인" >
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1">이름</label>
-      <input type="text" class="form-control" id="name" name="name" value="${memberDto.name}">
+      <input type="text" class="form-control" id="name" name="name" value="${memberDto.name}" placeholder="이름">
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1">이메일</label>
-      <input type="text" class="form-control" id="email" name="email" value="${memberDto.email}">
+      <input type="text" class="form-control" id="email" name="email" value="${memberDto.email}" placeholder="이메일">
     </div>
+<div class="horizontal-form-group">  
     <fieldset class="form-group">
-      <legend>성별</legend>
+      <legend style="font-size:22px; color:gray;">성별</legend>
       <div class="form-check">
         <label class="form-check-label">
           <input type="radio" class="form-check-input" name="gender" id="optionsRadios1" 
@@ -49,24 +62,11 @@
         </label>
       </div>
     </fieldset>
-    <c:set var="education" value="${memberDto.education}"/>
-    <div class="form-group">
-      <label for="exampleSelect2">학력</label>
-      <select class="form-control" id="" name="education" >
-        <option>선택 필수</option>
-        <option value="1" ${memberDto.education eq '1' ? 'selected' : ''}>초등학교</option>
-        <option value="2" ${memberDto.education eq '2' ? 'selected' : ''}>중학교</option>
-        <option value="3" ${memberDto.education eq '3' ? 'selected' : ''}>고등학교</option>
-        <option value="4" ${memberDto.education eq '4' ? 'selected' : ''}>대학교</option>
-        <option value="5" ${memberDto.education eq '5' ? 'selected' : ''}>대학원</option>
-      </select>
-    </div>
-    
     
     <c:set var="inter" value="${memberDto.inters}"/>
     <div class="form-group">
     <fieldset class="form-group">
-      <legend>관심사항</legend>
+      <legend style="font-size:22px; color:gray;">관심사항</legend>
       <div class="form-check">
         <label class="form-check-label">
           <input class="form-check-input" type="checkbox" name="inters" 
@@ -92,20 +92,44 @@
         </label>
       </div>
     </fieldset>
+</div>
+    <c:set var="education" value="${memberDto.education}"/>
+    <div class="form-group">
+    <select class="form-control" id="" name="education" >
+        <option>학력 선택(필수)</option>
+        <option value="1" ${memberDto.education eq '1' ? 'selected' : ''}>초등학교</option>
+        <option value="2" ${memberDto.education eq '2' ? 'selected' : ''}>중학교</option>
+        <option value="3" ${memberDto.education eq '3' ? 'selected' : ''}>고등학교</option>
+        <option value="4" ${memberDto.education eq '4' ? 'selected' : ''}>대학교</option>
+        <option value="5" ${memberDto.education eq '5' ? 'selected' : ''}>대학원</option>
+      </select>
+    </div>
     </div>
     <div class="form-group">
       <label for="exampleTextarea">자기소개</label>
-      <textarea class="form-control" id="selfintroduce" rows="10" name="selfintroduce" >${memberDto.selfintroduce}</textarea>
+      <textarea class="form-control" id="selfintroduce" rows="10" name="selfintroduce" placeholder="자기소개를 입력하세요" >${memberDto.selfintroduce}</textarea>
     </div>
 
     <button type="submit" class="btn btn-primary">수정</button>
-    <a href="<c:url value="/Board/DelMember.kjh"/>" class="btn btn-primary">회원탈퇴</a>
+    <a id="deleteButton" href="#" class="btn btn-primary">회원탈퇴</a>
   </fieldset>
 </form>
 </div>
 
 <script>
 window.addEventListener("DOMContentLoaded", function() {
+	
+	var deleteButton = document.querySelector('#deleteButton');
+	deleteButton.onclick=()=>{
+		if(confirm("정말로 탈퇴하시겠습니까?")){
+			location.replace(" <c:url value='/Board/DelMember.kjh'/> ");
+		}
+		else{
+			return;
+		}
+	}
+	
+	
 	var form = document.querySelector('#editForm');
 	var password = document.getElementById("password");
 	var password_ck = document.getElementById("password_ck");

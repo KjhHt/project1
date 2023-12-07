@@ -26,9 +26,9 @@
 }
 </style>
 
-<div class="jumbotron">
+<div class="jumbotron" style="padding-left:60px; padding-right:60px;">
 	<div class="d-flex justify-content-between align-items-center">
-		<a class="btn btn-primary btn-lg"
+		<a class="btn btn-secondary btn-lg"
 			href="<c:url value="/Board/Insert.kjh"/>" role="button">글등록</a>
 		<div>
 			<select class="pl" id="pageSize" >

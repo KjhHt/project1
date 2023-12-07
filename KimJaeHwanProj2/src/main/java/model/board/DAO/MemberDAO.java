@@ -121,8 +121,26 @@ public class MemberDAO implements DaoService<MemberDTO>{
 	@Override
 	public int delete(MemberDTO dto) {
 		int affected = 0;
+		/* 모든 자식 레코드 삭제*/
+		String likesSql = "DELETE likes WHERE username = ?";
+		String commentSql = "DELETE commenttable WHERE username = ?";
+		String boardSql = "DELETE board WHERE username = ?";
 		String sql = "DELETE member WHERE username = ?";
+		
 		try {
+			//좋아요 username 모두 삭제
+			psmt = conn.prepareStatement(likesSql);
+			psmt.setString(1, dto.getUsername());
+			affected = psmt.executeUpdate();
+			//댓글 username 모두 삭제
+			psmt = conn.prepareStatement(commentSql);
+			psmt.setString(1, dto.getUsername());
+			affected = psmt.executeUpdate();
+			//게시판 username 모두 삭제
+			psmt = conn.prepareStatement(boardSql);
+			psmt.setString(1, dto.getUsername());
+			affected = psmt.executeUpdate();
+			//마지막 회원 삭제 <-
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, dto.getUsername());
 			affected = psmt.executeUpdate();

@@ -16,11 +16,10 @@
     }
 </style>
 
-<div class="jumbotron">
+<div class="jumbotron" style="padding-left:120px; padding-right:120px;">
 	<form action="<c:url value="/Board/Edit.kjh"/>" method="post" enctype="multipart/form-data">
 	  <fieldset>
 	<c:if test="${list.attachFile ne 'X'}">
-	<div class="text-danger" style="text-align:right;">※파일을 수정하게 되면 기존 파일들은 삭제됩니다. 주의하세요</div>
 	<div style="text-align:right; font-size:20px;"><b>등록된 파일리스트</b></div>
 		<div class="file-list_orgin" style="text-align:right;">
 			<c:forEach var="file" items="${fn:split(list.attachFile,',') }">
@@ -40,7 +39,7 @@
     </div>
 </div>
 <div style="text-align:right; font-size:20px;"><b>수정된 파일리스트</b></div>
-<ul style="text-align:right;" class="file-list_update" id="fileList"></ul>
+<ul style="text-align:right;" class="list-unstyled" id="fileList"></ul>
     <hr>
 	    <div class="form-group">
 	      <input type="text" class="form-control" id="title" name="title" value="${list.title }" placeholder="제목을 입력해 주세요">
@@ -89,9 +88,10 @@
        });
        
        document.querySelector('.file-list_orgin').addEventListener('click', function(e) {
-       		console.log(e.target.parentNode.firstChild.textContent.trim());
-        	var updateFileList = document.querySelector('#updateFileList');
-        	updateFileList.value += e.target.parentNode.firstChild.textContent.trim()+",";
-        	e.target.parentNode.remove();
+    	   if(e.target.nodeName === 'SPAN'){
+				var updateFileList = document.querySelector('#updateFileList');
+				updateFileList.value += e.target.parentNode.firstChild.textContent.trim()+",";
+				e.target.parentNode.remove();
+    	   }
        });
    </script>

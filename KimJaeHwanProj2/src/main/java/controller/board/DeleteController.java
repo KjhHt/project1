@@ -15,7 +15,6 @@ public class DeleteController extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
 		String no = req.getParameter("no");
 		BoardDAO dao = new BoardDAO(getServletContext());
 		BoardDTO dto = new BoardDTO();
@@ -24,7 +23,6 @@ public class DeleteController extends HttpServlet{
 		int result = dao.delete(dto);
 		dao.close();
 		
-		System.out.println(result);
 		if(result==0) {
 			System.out.println("입력실패");
 		}

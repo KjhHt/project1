@@ -126,7 +126,4 @@ public class EditController extends HttpServlet{
 		return filename;
 	}
 	
-	
-	
-	
 }

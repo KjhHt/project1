@@ -19,7 +19,6 @@ public class CommentInsertController extends HttpServlet{
 		String no = req.getParameter("no");
 		String content = req.getParameter("commentcontent");
 		
-		
 		BoardDAO dao = new BoardDAO(getServletContext());
 		CommentDTO dto = new CommentDTO();
 		dto.setNo(no);
