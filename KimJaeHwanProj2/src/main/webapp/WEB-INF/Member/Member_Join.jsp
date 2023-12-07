@@ -33,8 +33,20 @@
     <div class="form-group">
       <input type="text" class="form-control" id="name" name="name" placeholder="이름">
     </div>
-    <div class="form-group">
-      <input type="text" class="form-control" id="email" name="email" placeholder="이메일">
+    <div class="form-group" style="display: flex; align-items: center;">
+      <input type="text" class="form-control" id="email" name="email" placeholder="이메일" style="width:40%;">
+      <select class="form-control" id="backemail" name="backemail" style="width:30%;">
+        <option value="@naver.com">naver.com</option>
+        <option value="@gmail.com">gmail.com</option>
+        <option value="@daum.net">daum.net</option>
+        <option value="@hanmail.com">hanmail.com</option>
+        <option value="@yahoo.co.kr">yahoo.co.kr</option>
+      </select>
+      <button style="width:20%;" type="button" class="btn btn-primary" id="mail-Check-Btn">본인인증</button>
+    </div>
+    <div class="form-group" style="display: flex; align-items: center;">
+    	<input type="text" class="form-control" id="six" placeholder="인증번호(6자리)를 입력해주세요!" style="width:50%;" maxlength="6">
+    	<button style="width:20%;" type="button" id="isValidSuccess" class="btn btn-primary">인증확인</button>
     </div>
 <div class="horizontal-form-group">  
     <fieldset class="form-group">
@@ -105,7 +117,10 @@
 		var selfintroduce = document.getElementById("selfintroduce");
 		var name = document.getElementById("name");
 		var email = document.getElementById("email");
-		var isValid = {};
+		var backEmailValue = document.querySelector('#backEmail');
+		var isValidSuccess = document.querySelector('#isValidSuccess');
+		var code = "";
+		var isValid = {emailValid:false};
 		username.addEventListener("blur", function() {
 	        var usernameValue = username.value.trim();
 			var regex = /^[a-z0-9_-]{5,20}$/;
@@ -186,17 +201,16 @@
 			}
 	    });
 		
-		email.addEventListener("blur", function() {
-	        var emailValue = email.value.trim();
-	        var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-	        if(!regex.test(emailValue)){
-	        	isValid.email = false;
-	        	failMessage(email,"유효한 이메일 주소를 입력해주세요!");
+		isValidSuccess.addEventListener("click", function() {
+	        var six = document.querySelector('#six')
+	        if(code === six.value){//인증번호 성공
+	        	isValid.emailValid = true;
+	        	alert('본인인증이 확인됬습니다.')
 	        }
-			else{
-				isValid.email = true;
-				successMessage(email,"사용 가능합니다!");
-			}
+	        else{
+	        	isValid.emailValid = false;
+	        	alert('인증번호가 일치 하지 않습니다.')
+	        }
 	    });
 		
 		
@@ -308,6 +322,20 @@
 	            return;
 	        }
 		});
+		
+		$('#mail-Check-Btn').click(function() {
+			const eamil = $('#email').val() + $('#backemail').val();
+			const checkInput = $('.mail-check-input') 
+			$.ajax({
+				type : 'get',
+				url : '<c:url value ="/mailCheck?email="/>'+eamil,
+				success : function (data) {
+			        var resultValue = data.result;
+					code=resultValue;
+					alert('인증번호가 전송되었습니다.')
+				}			
+			}); // end ajax
+		}); // end send eamil
 		
 	});
 </script>

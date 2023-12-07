@@ -51,9 +51,12 @@ public class JoinController extends HttpServlet {
 			out.println("<script>alert('비밀번호를 확인하세요. -관리자 문의'); history.back();</script>");
 		}
 		String email = req.getParameter("email");
+		String backemail = req.getParameter("backemail");
+		email = email+backemail;
 		if(email == null || email.trim().isEmpty() ) {
 			out.println("<script>alert('이메일을 입력하세요. -관리자 문의'); history.back();</script>");
 		}
+
 		String name = req.getParameter("name");
 		if(name == null || name.trim().isEmpty() ) {
 			out.println("<script>alert('이름을 입력하세요. -관리자 문의'); history.back();</script>");
